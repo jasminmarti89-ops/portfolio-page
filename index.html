@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A little note</title>
+</head>
+<body style="margin: 0; height: 100%; background: #2a48c9; display: grid; place-items: center; font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;">
+
+  <button id="open" type="button"
+    style="font: inherit; font-weight: 800; font-size: 1.5rem; color: #1b2a6b; background: #ffd23f; border: none; border-radius: 999px; padding: 1.1rem 2.4rem; cursor: pointer; box-shadow: 0 6px 0 #e0a800; transition: transform 0.12s ease, box-shadow 0.12s ease;">
+    Open me
+  </button>
+
+  <dialog id="modal" aria-labelledby="msg"
+    style="border: none; padding: 2.5rem 2rem 2rem; width: min(90vw, 26rem); border-radius: 1.75rem; background: #fff8e1; color: #1b2a6b; text-align: center;">
+    <p id="msg"
+      style="margin: 0 0 1.75rem; font-weight: 800; font-size: 3rem; line-height: 1; letter-spacing: -0.02em;">
+      You're great.
+    </p>
+    <button id="close" type="button"
+      style="font: inherit; font-weight: 700; font-size: 1rem; color: #fff8e1; background: #1b2a6b; border: none; border-radius: 999px; padding: 0.7rem 1.6rem; cursor: pointer;">
+      Thanks!
+    </button>
+  </dialog>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const openBtn = document.getElementById('open');
+
+    openBtn.addEventListener('click', () => modal.showModal());
+    document.getElementById('close').addEventListener('click', () => modal.close());
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+
+    // Hover/press effect (can't be done with inline CSS)
+    openBtn.addEventListener('mouseenter', () => { openBtn.style.transform = 'translateY(-2px)'; openBtn.style.boxShadow = '0 8px 0 #e0a800'; });
+    openBtn.addEventListener('mouseleave', () => { openBtn.style.transform = ''; openBtn.style.boxShadow = '0 6px 0 #e0a800'; });
+    openBtn.addEventListener('mousedown', () => { openBtn.style.transform = 'translateY(4px)'; openBtn.style.boxShadow = '0 2px 0 #e0a800'; });
+    openBtn.addEventListener('mouseup', () => { openBtn.style.transform = 'translateY(-2px)'; openBtn.style.boxShadow = '0 8px 0 #e0a800'; });
+  </script>
+</body>
+</html>
