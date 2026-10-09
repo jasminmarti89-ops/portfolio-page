@@ -16,8 +16,8 @@
     .frame { position: absolute; inset: 0; box-sizing: border-box; pointer-events: none; border-style: solid; border-color: transparent;
       border-width: calc(var(--n) * 0.3026) calc(var(--n) * 0.36) calc(var(--n) * 0.0605) calc(var(--n) * 0.3002);
       border-image: url("rahmen.png") 1006 1197 201 998 stretch; }
-    /* Plane leaves through the gap in the frame's top right corner */
-    .plane { position: absolute; right: calc(var(--n) * -0.039); top: calc(var(--n) * 0.1136); width: calc(var(--n) * 0.26); height: auto; pointer-events: none; }
+    /* Plane sits in the gap of the frame's top right corner, fully inside the frame's box so it can never leave the screen */
+    .plane { position: absolute; right: 0; top: calc(var(--n) * 0.1); width: calc(var(--n) * 0.24); height: auto; pointer-events: none; }
 
     /* --h: height of one label, --a: width of the portrait. Right padding keeps clear of the plane's trail. */
     .content { --h: calc(var(--n) * 0.07); --a: calc(var(--n) * 0.26);
@@ -26,12 +26,13 @@
 
     .nav { display: flex; flex-direction: column; align-items: flex-start; gap: calc(var(--h) * 0.4); }
     .nav img { display: block; height: var(--h); width: auto; }
-    .nav > :nth-child(1) { transform: rotate(-2deg); }
-    .nav > :nth-child(2) { transform: rotate(1.5deg); }
-    .nav > :nth-child(3) { transform: rotate(-1deg); }
-    .nav button { background: none; border: none; padding: 0; cursor: pointer; transition: transform 0.12s ease; }
-    .nav button:hover { transform: rotate(1.5deg) scale(1.06); }
-    .nav button:active { transform: rotate(1.5deg) scale(0.97); }
+    .nav > :nth-child(1) { --r: -2deg; }
+    .nav > :nth-child(2) { --r: 1.5deg; }
+    .nav > :nth-child(3) { --r: -1deg; }
+    .nav > :nth-child(4) { --r: 1deg; }
+    .nav a, .nav button { display: block; background: none; border: none; padding: 0; cursor: pointer; transform: rotate(var(--r)); transition: transform 0.12s ease; }
+    .nav a:hover, .nav button:hover { transform: rotate(var(--r)) scale(1.06); }
+    .nav a:active, .nav button:active { transform: rotate(var(--r)) scale(0.97); }
 
     .me { width: var(--a); margin: 0 auto; flex: none; }
     .me img { display: block; height: auto; }
@@ -40,7 +41,7 @@
 
     /* Square and portrait screens: portrait on top, labels below it. --h is the largest label height that still fits in height and width. */
     @media (max-aspect-ratio: 5/4) {
-      .content { --h: min(calc((var(--fh) - var(--n) * 0.25) / 7.7), calc((var(--fw) - var(--n) * 0.46) / 2.2), calc((var(--fw) - var(--n) * 0.18) / 4)); --a: calc(var(--h) * 2.2);
+      .content { --h: min(calc((var(--fh) - var(--n) * 0.25) / 9.1), calc((var(--fw) - var(--n) * 0.52) / 2.2), calc((var(--fw) - var(--n) * 0.18) / 4)); --a: calc(var(--h) * 2.2);
         flex-direction: column; justify-content: center; align-items: flex-start; gap: calc(var(--h) * 0.5); padding-right: calc(var(--n) * 0.08); }
       .me { order: -1; }
     }
@@ -54,9 +55,10 @@
 
     <div class="content">
       <nav class="nav">
-        <img src="aboutme.svg" alt="About me">
-        <button id="open" type="button"><img src="skills.svg" alt="Skills"></button>
-        <img src="techstack.svg" alt="Techstack">
+        <a href="about.html"><img src="aboutme.svg" alt="About me"></a>
+        <button type="button"><img src="skills.svg" alt="Skills"></button>
+        <button type="button"><img src="techstack.svg" alt="Techstack"></button>
+        <button type="button"><img src="hobbies.svg" alt="Hobbies"></button>
       </nav>
 
       <figure class="me">
@@ -81,7 +83,7 @@
   <script>
     const modal = document.getElementById('modal');
 
-    document.getElementById('open').addEventListener('click', () => modal.showModal());
+    document.querySelectorAll('.nav button').forEach((btn) => btn.addEventListener('click', () => modal.showModal()));
     document.getElementById('close').addEventListener('click', () => modal.close());
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
   </script>
