@@ -14,7 +14,7 @@
     /* --cw: width of the car image. The road spans the bottom of the screen and hides the car while it is still off screen. */
     .road { --cw: clamp(240px, 36vw, 480px); position: fixed; left: 0; right: 0; bottom: 1.5rem; overflow: hidden; border-bottom: 3px solid #111; pointer-events: none; }
     /* The lane is as wide as the screen with the car parked at its right end; sliding the lane in from the left drives the car across. */
-    .lane { display: flex; justify-content: flex-end; animation: drive 3.5s cubic-bezier(0.3, 0, 0.2, 1) both; }
+    .lane { display: flex; justify-content: flex-end; animation: drive 18s cubic-bezier(0.3, 0.4, 0.5, 1) both; }
     /* Negative margins trim the empty space around the car inside the image, so it stops at the edge with its wheels on the line */
     .car { display: block; width: var(--cw); height: auto; flex: none; margin-right: calc(var(--cw) * -0.19); margin-bottom: calc(var(--cw) * -0.062); }
 
