@@ -179,10 +179,11 @@
 
   /* ---------- Footer ---------- */
   .footer_end { background: var(--darker); color: #888; font-size: 0.9rem; padding: 24px 0; }
-  .footer_end .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  /* align-items: center puts all three footer texts on one vertical middle line, even with different font sizes */
+  .footer_end .container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
   .footer_end a { color: #bbb; text-decoration: none; }
   .footer_end a:hover { color: var(--white); }
-  .footer_end .credits { font-size: 0.8rem; }
+  .footer_end .credits { font-size: 0.7rem; }
   .footer_end .credits a { color: #888; text-decoration: underline; }
 
   .up_block { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 46px; height: 46px; display: grid; place-items: center; background: var(--dark); color: var(--white); text-decoration: none; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
