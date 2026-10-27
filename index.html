@@ -120,15 +120,46 @@
   .timeline p { margin: 0 0 8px; }
 
 
-  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 2px; background: var(--line); border: 2px solid var(--line); }
-  .tile { position: relative; min-height: 320px; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; background: var(--dark); color: #ccc; text-decoration: none; overflow: hidden; }
+  /* Projects: original tile design (number top left, text at the bottom, blue on hover), as a 2x2 grid of larger, square tiles */
+  .tiles { display: grid; grid-template-columns: 1fr; gap: 2px; width: min(880px, 100% - 32px); margin-left: max(16px, (100% - 1140px) / 2); margin-right: auto; background: var(--line); border: 2px solid var(--line); }
+  /* min-height = tile width makes the tiles square; grid-auto-rows: 1fr keeps all rows equally high if a text needs more room */
+  @media (min-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; } .tiles .tile { min-height: calc((min(880px, 100vw - 32px) - 6px) / 2); } }
+  /* content starts at the top (below the number), so all titles stand at the same height */
+  .tile { position: relative; min-height: 380px; display: flex; flex-direction: column; padding: 136px 32px 32px; background: var(--dark); color: #ccc; text-decoration: none; overflow: hidden; }
   .tile::before { content: ""; position: absolute; inset: 0; background: var(--accent); opacity: 0; transition: opacity 0.35s; }
-  .tile:hover::before, .tile:focus-visible::before { opacity: 0.9; }
+  .tile:hover::before, .tile:has(:focus-visible)::before { opacity: 0.9; }
   .tile > * { position: relative; }
   .tile .num { position: absolute; top: 24px; left: 32px; font: 300 3rem 'Oswald', sans-serif; color: rgba(255, 255, 255, 0.15); }
-  .tile h3 { color: var(--white); font-size: 1.4rem; margin-bottom: 8px; }
+  /* room for two title lines, so the text below starts at the same height in every tile */
+  .tile h3 { color: var(--white); font-size: 1.4rem; line-height: 1.2; min-height: 2.4em; margin-bottom: 16px; }
   .tile p { margin: 0; font-size: 0.95rem; }
-  .tile .more { margin-top: 16px; font: 400 0.85rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; color: var(--white); }
+  /* keywords as small outlined tags, pushed to the bottom of the tile */
+  .tile_tags { list-style: none; margin: auto 0 0; padding: 24px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tile_tags li { padding: 0.3em 0.75em; border: 1px solid rgba(255, 255, 255, 0.3); font-size: 0.78rem; color: #ddd; }
+  /* role: top right, on the same line as the number; turns white on hover so it stays readable on the blue */
+  .tile .more { position: absolute; top: 42px; right: 32px; font: 400 0.85rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; color: #8fc3dc; transition: color 0.35s; }
+  .tile:hover .more, .tile:has(:focus-visible) .more { color: var(--white); }
+  /* "Details ansehen" button: text is hidden (font-size 0, still read by screen readers); its ::after stretches over the whole tile, so the entire tile is clickable */
+  .tile .tile_open { position: static; margin: 0; padding: 0; background: none; border: 0; cursor: pointer; font-size: 0; }
+  .tile .tile_open::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+  .tile .tile_open:focus-visible { outline: none; }
+  .tile:has(:focus-visible) { outline: 2px solid var(--white); outline-offset: -6px; }
+
+  /* Project detail pop-up */
+  .project_dialog { width: min(680px, 100% - 32px); max-height: 90vh; padding: 0; border: 0; color: var(--text); background: var(--white); }
+  .project_dialog::backdrop { background: rgba(20, 20, 20, 0.7); }
+  .project_dialog .dlg_inner { padding: clamp(24px, 5vw, 48px); }
+  .project_dialog .dlg_head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .project_dialog .dlg_num { font: 300 2.4rem/1 'Oswald', sans-serif; color: #ccc; }
+  .project_dialog .dlg_role { font: 400 0.85rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); }
+  .project_dialog h3 { font-size: clamp(1.4rem, 3.5vw, 1.8rem); margin: 8px 0 24px; }
+  .project_dialog h4 { font-size: 0.95rem; letter-spacing: 0.12em; color: var(--accent); margin: 24px 0 6px; }
+  .project_dialog p, .project_dialog ul { margin: 0; }
+  .project_dialog ul { padding-left: 1.2em; }
+  .project_dialog .dlg_tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .project_dialog .dlg_tags li { padding: 0.35em 0.9em; border: 1px solid #cfcfcf; font-size: 0.85rem; color: var(--dark); }
+  .project_dialog .dlg_close { position: sticky; top: 0; float: right; width: 44px; height: 44px; margin: 8px 8px 0 0; border: 0; background: var(--white); cursor: pointer; font-size: 1.8rem; line-height: 1; color: var(--dark); }
+  .project_dialog .dlg_close:hover { color: var(--accent); }
 
   .hobbies { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; }
   .hobby { padding: 28px; background: var(--white); border: 1px solid var(--line); }
@@ -377,26 +408,123 @@
     <h2 class="section_title reveal">Projekte</h2>
   </div>
   <div class="container tiles reveal">
-    <a class="tile" href="https://github.com/jasminmarti89-ops/portfolio-page">
+    <article class="tile">
       <span class="num">01</span>
-      <h3>Dieses Portfolio</h3>
-      <p>Persönliche One-Page-Website, gebaut mit HTML und CSS.</p>
-      <span class="more">Auf GitHub ansehen</span>
-    </a>
-    <a class="tile" href="#projects">
+      <h3>ERP-Umstellung auf Business Central</h3>
+      <p>Wechsel von Microsoft Navision (NAV) zu Microsoft Dynamics 365 Business Central für Einkauf, Warenwirtschaft und Logistik.</p>
+      <ul class="tile_tags"><li>Anforderungsanalyse</li><li>Prozessstandardisierung</li><li>UAT-Testing</li></ul>
+      <span class="more">Teilprojektleitung</span>
+      <button type="button" class="tile_open" data-project="projekt-1">Details ansehen &rarr;</button>
+    </article>
+    <article class="tile">
       <span class="num">02</span>
-      <h3>[Projektname]</h3>
-      <p>[Ein Satz zum Projekt.]</p>
-      <span class="more">Mehr</span>
-    </a>
-    <a class="tile" href="#projects">
+      <h3>WMS-Schnittstelle zum Lagerdienstleister</h3>
+      <p>Anbindung des neuen Lagerverwaltungssystems (WMS) unseres externen Lagerdienstleisters an Microsoft Business Central.</p>
+      <ul class="tile_tags"><li>Prozessaufnahme</li><li>Prozessanpassung BC</li><li>Schnittstelle</li><li>Testing</li><li>Schulung</li></ul>
+      <span class="more">Process Ownerin</span>
+      <button type="button" class="tile_open" data-project="projekt-2">Details ansehen &rarr;</button>
+    </article>
+    <article class="tile">
       <span class="num">03</span>
-      <h3>[Projektname]</h3>
-      <p>[Ein Satz zum Projekt.]</p>
-      <span class="more">Mehr</span>
-    </a>
+      <h3>Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
+      <p>Filialen scannen den EAN-Code mit dem MDE-Gerät: Ein Signalton zeigt sofort, ob der Artikel in den Ausverkauf kommt, und der neue Preis wird angezeigt. Knackpunkt: Die Angebote sind zu diesem Zeitpunkt noch nicht aktiv – gelöst über eine spezielle Angebotsbezeichnung.</p>
+      <ul class="tile_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Filialprozesse</li></ul>
+      <span class="more">Konzept &amp; Umsetzung</span>
+      <button type="button" class="tile_open" data-project="projekt-3">Details ansehen &rarr;</button>
+    </article>
+    <article class="tile">
+      <span class="num">04</span>
+      <h3>Meldebestände per MDE Scan-Gerät anfragen</h3>
+      <p>Statt anzurufen, scannen Filialmitarbeitende den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein. Der Einkauf sieht die Anfragen direkt in seiner Kachel in Business Central und gibt sie frei oder lehnt sie ab.</p>
+      <ul class="tile_tags"><li>MDE-Scanning</li><li>Freigabe-Workflow</li><li>Business Central</li></ul>
+      <span class="more">Konzept &amp; Umsetzung</span>
+      <button type="button" class="tile_open" data-project="projekt-4">Details ansehen &rarr;</button>
+    </article>
   </div>
 </section>
+
+<!-- Project details (opened by the "Details ansehen" buttons in the tiles) -->
+<dialog class="project_dialog" id="projekt-1" aria-labelledby="projekt-1-title">
+  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <div class="dlg_inner">
+    <div class="dlg_head"><span class="dlg_num">01</span><span class="dlg_role">Teilprojektleitung</span></div>
+    <h3 id="projekt-1-title">ERP-Umstellung auf Business Central</h3>
+    <h4>Ausgangslage</h4>
+    <p>Microsoft Navision (NAV) hatte das Ende seines Lebenszyklus erreicht. Es gab keine Updates mehr und Anpassungen oder Wartung waren kaum noch möglich. Deshalb stellte Transa Backpacking AG auf Microsoft Dynamics 365 Business Central um.</p>
+    <h4>Meine Rolle</h4>
+    <p>Teilprojektleitung für die Abteilungen Einkauf, Warenwirtschaft und Logistik. Die Gesamtprojektleitung lag bei der internen IT.</p>
+    <h4>Umsetzung</h4>
+    <ul>
+      <li>Anforderungen der Fachbereiche aufgenommen und analysiert</li>
+      <li>Prozesse für Einkauf, Warenwirtschaft und Logistik standardisiert</li>
+      <li>User Acceptance Tests (UAT) geplant und durchgeführt</li>
+      <li>Schulungen für Einkauf und Warenwirtschaft durchgeführt</li>
+      <li>Schulungsdokumentation für Einkauf, Warenwirtschaft und Logistik erstellt</li>
+    </ul>
+    <h4>Ergebnis</h4>
+    <p>Go-live 2024 für rund 40 Benutzer:innen in Einkauf, Warenwirtschaft und Logistik. Heute stehen bessere Tracking-Möglichkeiten, übersichtlichere Ansichten und genauere Lagerhaltungsdaten zur Verfügung – und Business Central berechnet Bestellvorschläge automatisch.</p>
+    <ul class="dlg_tags"><li>Anforderungsanalyse</li><li>Prozessstandardisierung</li><li>UAT-Testing</li><li>Business Central</li></ul>
+  </div>
+</dialog>
+
+<dialog class="project_dialog" id="projekt-2" aria-labelledby="projekt-2-title">
+  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <div class="dlg_inner">
+    <div class="dlg_head"><span class="dlg_num">02</span><span class="dlg_role">Process Ownerin</span></div>
+    <h3 id="projekt-2-title">WMS-Schnittstelle zum Lagerdienstleister</h3>
+    <h4>Ausgangslage</h4>
+    <p>Unser externer Lagerdienstleister führte ein eigenes Lagerverwaltungssystem (WMS) ein. Damit Bestellungen, Wareneingänge und Lieferungen weiterhin reibungslos laufen, musste das neue System an Microsoft Business Central angebunden werden.</p>
+    <h4>Meine Rolle</h4>
+    <p>Als Process Ownerin war ich für alle fachlichen und technischen Themen auf der Business-Central-Seite verantwortlich. Die Projektleitung lag bei einer anderen Person.</p>
+    <h4>Umsetzung</h4>
+    <ul>
+      <li>Bestehende Prozesse zusammen mit den Fachbereichen aufgenommen</li>
+      <li>Business-Central-Prozesse angepasst, wo es für die Schnittstelle nötig war</li>
+      <li>Notwendige Weiterentwicklungen für die Schnittstelle mit der externen IT definiert und umgesetzt</li>
+      <li>Schnittstelle getestet</li>
+      <li>Mitarbeitende auf die neuen Abläufe geschult</li>
+    </ul>
+    <h4>Ergebnis</h4>
+    <p>Go-live 2026. Das Lager scannt Wareneingänge jetzt direkt gegen die gelieferte Ware. Bisher mussten Wareneingänge komplett eröffnet und nicht gelieferte Zeilen vorgängig gelöscht werden. Gerüstet wird neu laufwegoptimiert, mit einem System, das auf die Bedürfnisse eines Lagers zugeschnitten ist statt auf den Detailhandel. Weil das WMS extern gehostet wird, braucht es keine eigene Infrastruktur vor Ort, und die laufenden Betriebskosten sinken.</p>
+    <ul class="dlg_tags"><li>Prozessaufnahme</li><li>Prozessanpassung BC</li><li>Schnittstellen</li><li>Testing</li><li>Schulung</li></ul>
+  </div>
+</dialog>
+
+<dialog class="project_dialog" id="projekt-3" aria-labelledby="projekt-3-title">
+  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <div class="dlg_inner">
+    <div class="dlg_head"><span class="dlg_num">03</span><span class="dlg_role">Konzept &amp; Umsetzung</span></div>
+    <h3 id="projekt-3-title">Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
+    <h4>Ausgangslage</h4>
+    <p>Die Filialen mussten Ausverkaufsware manuell rabattieren, Artikel in einer Excel-Liste suchen, prüfen, ob der Artikel überhaupt in den Ausverkauf kommt, den Preis eingeben und das Etikett drucken. Das war zeitaufwendig und fehleranfällig.</p>
+    <h4>Lösung</h4>
+    <p>Neu scannen die Mitarbeitenden den EAN-Code mit dem MDE-Gerät. Ein Signalton zeigt sofort, ob für den Artikel ein Ausverkaufsangebot existiert, und das Gerät zeigt gleich den Preis an, auf den rabattiert werden muss.</p>
+    <h4>Die Herausforderung</h4>
+    <p>Zum Zeitpunkt der Vorbereitung sind die Angebote im System noch nicht aktiv. Gelöst habe ich das über den Angebotsnamen. Er zeigt beim Scannen, ob der Artikel in den Ausverkauf kommt und zu welchem Preis, auch wenn das Angebot selbst noch nicht aktiv ist.</p>
+    <h4>Ergebnis</h4>
+    <p>Im Einsatz in 12 Filialen. Die Mitarbeitenden müssen nicht mehr in Listen suchen und sehen den korrekten Ausverkaufspreis direkt auf dem Gerät. Das macht das Rabattieren schneller und weniger fehleranfällig.</p>
+    <ul class="dlg_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Prozessautomatisierung</li><li>Filialprozesse</li></ul>
+  </div>
+</dialog>
+
+<dialog class="project_dialog" id="projekt-4" aria-labelledby="projekt-4-title">
+  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <div class="dlg_inner">
+    <div class="dlg_head"><span class="dlg_num">04</span><span class="dlg_role">Konzept &amp; Umsetzung</span></div>
+    <h3 id="projekt-4-title">Meldebestände per MDE Scan-Gerät anfragen</h3>
+    <h4>Ausgangslage</h4>
+    <p>Wollten Filialmitarbeitende auf der Verkaufsfläche den Meldebestand eines Artikels erhöhen, mussten sie den Einkauf anrufen. Das kostete beide Seiten Zeit, und einzelne Anfragen konnten untergehen.</p>
+    <h4>Lösung</h4>
+    <ul>
+      <li>Die Mitarbeitenden scannen den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein.</li>
+      <li>Im Einkauf erscheint die Anfrage direkt in einer Kachel in Business Central mit der Information, welche Filiale welchen Bestand möchte.</li>
+      <li>Die Einkäufer:innen prüfen die Anfrage und geben sie frei oder lehnen sie ab.</li>
+    </ul>
+    <h4>Ergebnis</h4>
+    <p>Die Telefonanrufe sind weggefallen. Gerade zum Saisonstart, zum Saisonende und im Weihnachtsgeschäft übermittelt jede Filiale viele Anfragen, einzeln pro Grösse und Farbe. Jede Anfrage ist nun nachvollziehbar, wer wann eine Erhöhung angefragt und wer sie freigegeben hat. Diese Daten stehen auch für Auswertungen zur Verfügung.</p>
+    <ul class="dlg_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Freigabe-Workflow</li><li>Filiale &amp; Einkauf</li></ul>
+  </div>
+</dialog>
 
 <!-- Hobbies -->
 <section class="boxes alt" id="hobbies">
@@ -466,6 +594,13 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Project tiles: open the matching detail pop-up; close with the X, Escape or a click on the dark background
+  document.querySelectorAll('.tile_open').forEach((btn) => btn.addEventListener('click', () => document.getElementById(btn.dataset.project).showModal()));
+  document.querySelectorAll('.project_dialog').forEach((dlg) => {
+    dlg.querySelector('.dlg_close').addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  });
 
   // Fade sections in as they enter the screen
   const observer = new IntersectionObserver((entries) => {
