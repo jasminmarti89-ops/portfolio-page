@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jasmin Marti – Portfolio</title>
-<meta name="description" content="Portfolio and CV of Jasmin Marti">
+<meta name="description" content="Portfolio und Lebenslauf von Jasmin Marti">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -117,7 +117,7 @@
   .timeline .date { font: 400 0.95rem 'Oswald', sans-serif; letter-spacing: 0.1em; color: var(--muted); }
   .timeline h3 { font-size: 1.3rem; }
   .timeline .place { display: block; margin: 4px 0 10px; font-weight: 600; color: var(--accent); }
-  .timeline p { margin: 0; }
+  .timeline p { margin: 0 0 8px; }
 
 
   .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 2px; background: var(--line); border: 2px solid var(--line); }
@@ -174,17 +174,17 @@
 <!-- Header -->
 <header class="header" id="header">
   <a class="logo" href="#top">Jasmin Marti</a>
-  <button class="menu_btn" id="menu_btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
+  <button class="menu_btn" id="menu_btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen"><span></span></button>
 
-  <nav class="menu" id="menu" aria-label="Main">
+  <nav class="menu" id="menu" aria-label="Hauptmenü">
     <ul>
-      <li><a href="#about">About me</a></li>
+      <li><a href="#about">Über mich</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#hobbies">Hobbies</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#experience">Berufserfahrung</a></li>
+      <li><a href="#education">Ausbildung</a></li>
+      <li><a href="#projects">Projekte</a></li>
+      <li><a href="#hobbies">Hobbys</a></li>
+      <li><a href="#contact">Kontakt</a></li>
     </ul>
   </nav>
 </header>
@@ -199,10 +199,10 @@
       <span class="intro_label">Portfolio</span>
       <h1 class="great_title">Jasmin Marti</h1>
       <span class="great_subtitle">Application Managerin</span>
-      <div class="btns"><a href="#experience" class="btn btn-white">View CV</a><a href="#contact" class="btn btn-white">Contact</a></div>
+      <div class="btns"><a href="#experience" class="btn btn-white">Lebenslauf</a><a href="#contact" class="btn btn-white">Kontakt</a></div>
     </div>
   </div>
-  <a href="#about" class="down_block" aria-label="Scroll down">
+  <a href="#about" class="down_block" aria-label="Nach unten scrollen">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </a>
 </section>
@@ -211,19 +211,19 @@
 <section class="boxes" id="about">
   <div class="container">
     <div class="reveal">
-      <h4 class="sml_abs_title">About me</h4>
-      <h2 class="section_title">Hello, I'm Jasmin</h2>
+      <h4 class="sml_abs_title">Über mich</h4>
+      <h2 class="section_title">Hallo, ich bin Jasmin</h2>
     </div>
     <!-- title above both columns, so the facts start at the same height as the text -->
     <div class="two_cols">
     <div class="reveal">
-      <p>I am an open and approachable person who enjoys working where daily business and projects come together. As Process Owner for Microsoft Dynamics 365 Business Central, I have been working between the business teams, IT and external partners for three years – right where requirements are created and need to be translated.
-When working with others, I value clarity, mutual respect and humor. When I'm not working or studying at Bern University of Applied Sciences (BFH), I'm usually in the mountains – with my rooftop tent or on foot.</p>
+      <p>Ich bin eine offene und zugängliche Person und arbeite gerne dort, wo Tagesgeschäft und Projekte zusammenkommen. Als Process Owner für Microsoft Dynamics 365 Business Central arbeite ich seit drei Jahren an der Schnittstelle zwischen Fachbereichen, IT und externen Partnern – genau dort, wo Anforderungen entstehen und übersetzt werden müssen.</p>
+      <p>In der Zusammenarbeit sind mir Klarheit, gegenseitiger Respekt und Humor wichtig. Wenn ich nicht arbeite oder an der Berner Fachhochschule (BFH) studiere, bin ich meistens in den Bergen unterwegs – mit meinem Dachzelt oder zu Fuss.</p>
     </div>
     <ul class="facts reveal">
-      <li><span>Location</span><span>Bern</span></li>
-      <li><span>Languages</span><span>German, English, French, Spanish</span></li>
-      <li><span>E-mail</span><span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></span></li>
+      <li><span>Wohnort</span><span>Bern</span></li>
+      <li><span>Sprachen</span><span>Deutsch, Englisch, Französisch, Spanisch</span></li>
+      <li><span>E-Mail</span><span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></span></li>
     </ul>
     </div>
   </div>
@@ -239,21 +239,21 @@ When working with others, I value clarity, mutual respect and humor. When I'm no
         <h3>Techstack</h3>
         <ul class="chips">
           <li>Microsoft Dynamics 365 Business Central</li>
-          <li>EDI/DESADV, Azure Events (monitoring)</li>
-          <li>Power BI (reporting &amp; requirements)</li>
-          <li>Excel/VBA progamming</li>
-          <li>SQL, Python (studies)</li>
+          <li>EDI/DESADV, Azure Events (Monitoring)</li>
+          <li>Power BI (Auswertungen &amp; Anforderungen)</li>
+          <li>Excel/VBA-Programmierung</li>
+          <li>SQL, Python (Studium)</li>
         </ul>
       </div>
       <div class="skill_group reveal">
         <h3>Skills</h3>
         <ul class="chips">
-          <li>Requirements analysis</li>
-          <li>Process modeling (BPMN)</li>
-          <li>Process optimization &amp; documentation</li>
-          <li>User acceptance testing (UAT)</li>
-          <li>Training design &amp; delivery</li>
-          <li>Project &amp; sub-project management</li>
+          <li>Anforderungsanalyse</li>
+          <li>Prozessmodellierung (BPMN)</li>
+          <li>Prozessoptimierung &amp; Dokumentation</li>
+          <li>Abnahmetests (UAT)</li>
+          <li>Schulungskonzeption &amp;&nbsp;&#8209;durchführung</li>
+          <li>Projekt- und Teilprojektleitung</li>
         </ul>
       </div>
     </div>
@@ -263,79 +263,68 @@ When working with others, I value clarity, mutual respect and humor. When I'm no
 <!-- Experience -->
 <section class="boxes" id="experience">
   <div class="container">
-    <h4 class="sml_abs_title reveal">CV</h4>
-    <h2 class="section_title reveal">Experience</h2>
+    <h4 class="sml_abs_title reveal">Lebenslauf</h4>
+    <h2 class="section_title reveal">Berufserfahrung</h2>
     <ul class="timeline">
       <li class="reveal">
-        <span class="date">[2023 – today]</span>
+        <span class="date">2023 – heute</span>
         <div>
           <h3>Fachspezialistin Prozesse Einkauf und Warenwirtschaft</h3>
           <span class="place">Transa Backpacking AG, Zürich</span>
           <ul class="tasks">
-          </li><li>Prozess Ownerin Integration Einkauf und Warenwirtschaft
-              von 4 neuen Filialen</li>
-            <li>Projektleitung ERP Systemumstellung Microsoft Navision (NAV) to
-Microsoft Business Central für die Abteilungen Einkauf, Warenwirtschaft
-und Logistik Anforderungsanalyse, Prozessstandardisierung,
-UAT-Testing</li>
+            <li>Process Ownerin für die Integration von Einkauf und Warenwirtschaft in 4 neuen Filialen</li>
+            <li>Projektleitung ERP-Systemumstellung von Microsoft Navision (NAV) zu Microsoft Business Central für die Abteilungen Einkauf, Warenwirtschaft und Logistik: Anforderungsanalyse, Prozessstandardisierung, UAT-Testing</li>
             <li>Schulungskonzept entwickelt und durchgeführt</li>
             <li>Datenqualität und Importprozesse (EDI/DESADV) verantwortet</li>
-            <li>Manuelle Prozesse analysiert, Automatisierungspotenzial identifiziert
-und mittels VBA-Makros umgesetzt</li>
-            <li>Anforderungen für Power BI Reports definiert, Umsetzung der Reports
-begleitet und in operative Prozesse integriert</li>
-           </ul>
+            <li>Manuelle Prozesse analysiert, Automatisierungspotenzial identifiziert und mittels VBA-Makros umgesetzt</li>
+            <li>Anforderungen für Power BI Reports definiert, Umsetzung der Reports begleitet und in operative Prozesse integriert</li>
+          </ul>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2020 – 2023]</span>
+        <span class="date">2020 – 2023</span>
         <div>
           <h3>Sachbearbeiterin Warenwirtschaft</h3>
           <span class="place">Transa Backpacking AG, Zürich</span>
+          <p>Neben den Sachbearbeitungsaufgaben konnte ich mich bei Transa Backpacking in folgenden Bereichen weiterentwickeln:</p>
           <ul class="tasks">
-          Neben den Sachbearbeitungsaufgaben konnte ich mich bei Transa Backpacking
-in folgenden Bereichen weiterentwickeln:</li>
             <li>Optimierung und Automatisierung der Arbeitsabläufe</li>
-            <li>Navision Systemerweiterungen in Zusammenarbeit mit der IT</li>
+            <li>Navision-Systemerweiterungen in Zusammenarbeit mit der IT</li>
           </ul>
         </div>
-         </li>
+      </li>
       <li class="reveal">
-        <span class="date">[2019 – 2020]</span>
+        <span class="date">2019 – 2020</span>
         <div>
           <h3>Empfangsmitarbeiterin</h3>
           <span class="place">Hotel Excelsior, Arosa</span>
+          <p>Nach meiner Weltreise habe ich in Arosa eine Saisonstelle angetreten. Gäste aus verschiedenen Ländern zu betreuen, hat mir viel Freude bereitet.</p>
           <ul class="tasks">
-        Nach meiner Weltreise habe ich in Arosa eine Saisonstelle angetreten. Gäste
-aus verschiedenen Ländern zu betreuen hat mir viel Freude bereitet:
-<li>Organisation und Unterstützung eines reibungslosen Ablaufes des
-Empfangs</li>
+            <li>Organisation und Unterstützung eines reibungslosen Ablaufs am Empfang</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2018 – 2019]</span>
+        <span class="date">2018 – 2019</span>
         <div>
           <h3>Weltreise</h3>
           <span class="place">Papua-Neuguinea, Neuseeland, Alaska, Kanada</span>
-          <ul class="tasks">
-          </ul>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2015 – 2018]</span>
+        <span class="date">2015 – 2018</span>
         <div>
-          <h3>Kauffrau Import/ Export</h3>
+          <h3>Kauffrau Import/Export</h3>
           <span class="place">INUIKII AG, Zürich</span>
           <ul class="tasks">
             <li>Organisation und Koordination des gesamten Warenprozesses</li>
-            <li>Vollste Verantwortung für den kompletten Bereich des Importes und Exportes</li>
-            <li>Prozessoptimierung und Gestaltung</li>
+            <li>Volle Verantwortung für den kompletten Bereich Import und Export</li>
+            <li>Prozessoptimierung und -gestaltung</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2014 – 2015]</span>
+        <span class="date">2014 – 2015</span>
         <div>
           <h3>Weltreise</h3>
           <span class="place">Afrika, Indien, Borneo, Australien, Südamerika, Mittelamerika</span>
@@ -347,7 +336,7 @@ Empfangs</li>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2009 – 2013]</span>
+        <span class="date">2009 – 2013</span>
         <div>
           <h3>Geschäftsleitungs-Assistentin</h3>
           <span class="place">Heizteam Savaris AG, Brugg</span>
@@ -360,22 +349,22 @@ Empfangs</li>
 <!-- Education -->
 <section class="boxes alt" id="education">
   <div class="container">
-    <h4 class="sml_abs_title reveal">CV</h4>
-    <h2 class="section_title reveal">Education</h2>
+    <h4 class="sml_abs_title reveal">Lebenslauf</h4>
+    <h2 class="section_title reveal">Ausbildung</h2>
     <ul class="timeline">
       <li class="reveal">
-        <span class="date">[2024 – today]</span>
+        <span class="date">2024 – heute</span>
         <div>
-          <h3>Bachelor Digital Business & AI</h3>
+          <h3>Bachelor Digital Business &amp; AI</h3>
           <span class="place">Berner Fachhochschule, Bern</span>
         </div>
       </li>
       <li class="reveal">
-        <span class="date">[2006 – 2009]</span>
+        <span class="date">2006 – 2009</span>
         <div>
           <h3>Kauffrau EFZ mit Berufsmatur</h3>
           <span class="place">Berufs- und Weiterbildungszentrum, Brugg</span>
-          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -385,26 +374,26 @@ Empfangs</li>
 <section class="boxes" id="projects">
   <div class="container">
     <h4 class="sml_abs_title reveal">Portfolio</h4>
-    <h2 class="section_title reveal">Projects</h2>
+    <h2 class="section_title reveal">Projekte</h2>
   </div>
   <div class="container tiles reveal">
     <a class="tile" href="https://github.com/jasminmarti89-ops/portfolio-page">
       <span class="num">01</span>
-      <h3>This portfolio</h3>
-      <p>Personal one-page portfolio, built with HTML and CSS.</p>
-      <span class="more">View on GitHub</span>
+      <h3>Dieses Portfolio</h3>
+      <p>Persönliche One-Page-Website, gebaut mit HTML und CSS.</p>
+      <span class="more">Auf GitHub ansehen</span>
     </a>
     <a class="tile" href="#projects">
       <span class="num">02</span>
-      <h3>[Project name]</h3>
-      <p>[One sentence about the project.]</p>
-      <span class="more">More</span>
+      <h3>[Projektname]</h3>
+      <p>[Ein Satz zum Projekt.]</p>
+      <span class="more">Mehr</span>
     </a>
     <a class="tile" href="#projects">
       <span class="num">03</span>
-      <h3>[Project name]</h3>
-      <p>[One sentence about the project.]</p>
-      <span class="more">More</span>
+      <h3>[Projektname]</h3>
+      <p>[Ein Satz zum Projekt.]</p>
+      <span class="more">Mehr</span>
     </a>
   </div>
 </section>
@@ -412,12 +401,12 @@ Empfangs</li>
 <!-- Hobbies -->
 <section class="boxes alt" id="hobbies">
   <div class="container">
-    <h4 class="sml_abs_title reveal">Beyond work</h4>
-    <h2 class="section_title reveal">Hobbies</h2>
+    <h4 class="sml_abs_title reveal">Freizeit</h4>
+    <h2 class="section_title reveal">Hobbys</h2>
     <div class="hobbies">
-      <div class="hobby reveal"><img class="hobby_icon" src="nahen.png" alt=""><h3>Sewing</h3><p>I love sewing it combines creativity and precision, and at the end I can hold the result in my hands.</p></div>
-      <div class="hobby reveal"><img class="hobby_icon" src="dachzelt.png" alt=""><h3>Roof-tent camping</h3><p>On rooftop tent trips, I enjoy being outdoors and discovering beautiful landscapes.</p></div>
-      <div class="hobby reveal"><img class="hobby_icon" src="skifahrer.png" alt=""><h3>Skiing</h3><p>Skiing takes me into the mountains, where I enjoy the fresh air and the amazing views.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="nahen.png" alt=""><h3>Nähen</h3><p>Ich nähe leidenschaftlich gern. Es verbindet Kreativität und Präzision, und am Ende halte ich das Ergebnis in den Händen.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="dachzelt.png" alt=""><h3>Reisen mit dem Dachzelt</h3><p>Auf Reisen mit dem Dachzelt geniesse ich die Natur und entdecke wunderschöne Landschaften.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="skifahrer.png" alt=""><h3>Skifahren</h3><p>Beim Skifahren bin ich in den Bergen, geniesse die frische Luft und die herrliche Aussicht.</p></div>
     </div>
   </div>
 </section>
@@ -426,13 +415,13 @@ Empfangs</li>
 <section class="boxes contact" id="contact">
   <div class="container two_cols">
     <div class="reveal">
-      <h4 class="sml_abs_title">Contact</h4>
-      <h2 class="section_title">Let's talk</h2>
-      <p>I'm open to new opportunities – write me an e-mail.</p>
-      <a href="mailto:jasmin.marti89@gmail.com" class="btn btn-white">Write me an e-mail</a>
+      <h4 class="sml_abs_title">Kontakt</h4>
+      <h2 class="section_title">Kontakt aufnehmen</h2>
+      <p>Ich bin offen für neue Herausforderungen – schreiben Sie mir gerne eine E-Mail.</p>
+      <a href="mailto:jasmin.marti89@gmail.com" class="btn btn-white">E-Mail schreiben</a>
     </div>
     <ul class="contact_list reveal">
-      <li><span>E-mail</span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></li>
+      <li><span>E-Mail</span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></li>
       <li><span>GitHub</span><a href="https://github.com/jasminmarti89-ops">github.com/jasminmarti89-ops</a></li>
     </ul>
   </div>
@@ -444,13 +433,13 @@ Empfangs</li>
 <footer class="footer_end">
   <div class="container">
     <span>&copy; 2026 Jasmin Marti</span>
-    <span class="credits"><a href="https://www.flaticon.com/de/kostenlose-icons/ski" title="ski Icons">Ski Icons erstellt von Magnific - Flaticon</a></span>
-    <a href="#top">Back to top</a>
+    <span class="credits"><a href="https://www.flaticon.com/de/kostenlose-icons/ski" title="Ski Icons">Ski Icons erstellt von Magnific - Flaticon</a></span>
+    <a href="#top">Nach oben</a>
   </div>
 </footer>
 
 <!-- Up Arrow -->
-<a href="#top" class="up_block" id="up_block" aria-label="Back to top">
+<a href="#top" class="up_block" id="up_block" aria-label="Nach oben">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
 </a>
 
@@ -463,7 +452,7 @@ Empfangs</li>
   function setMenu(open) {
     header.classList.toggle('open', open);
     menuBtn.setAttribute('aria-expanded', open);
-    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
     document.body.style.overflow = open ? 'hidden' : '';
   }
   menuBtn.addEventListener('click', () => setMenu(!header.classList.contains('open')));
