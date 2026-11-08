@@ -53,6 +53,13 @@
   .menu ul { list-style: none; margin: 0; padding: 0; text-align: center; }
   .menu a { display: block; padding: 0.35em 1em; font: 400 clamp(1.5rem, 5vw, 2.4rem) 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dark); text-decoration: none; }
   .menu a:hover, .menu a:focus-visible { color: var(--accent); }
+  /* Language switch (DE | EN) next to the menu button; colour follows the header like the logo */
+  .header_right { display: flex; align-items: center; gap: 8px; }
+  .lang_switch { padding: 8px 6px; border: 0; background: none; cursor: pointer; font: 400 0.85rem 'Oswald', sans-serif; letter-spacing: 0.15em; color: var(--white); transition: color 0.3s; }
+  .lang_switch span { opacity: 0.5; transition: opacity 0.2s; }
+  .lang_switch span.active { opacity: 1; font-weight: 700; }
+  .lang_switch:hover span { opacity: 1; }
+  .header.solid .lang_switch, .header.open .lang_switch { color: var(--dark); }
 
   /* ---------- Intro ---------- */
   .intro { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; text-align: center; color: var(--white); background: radial-gradient(ellipse at 30% 20%, #3a3a3a 0%, var(--dark) 55%, var(--darker) 100%); --pad-x: clamp(16px, 4vw, 48px); padding: calc(var(--header-h) + 24px) var(--pad-x) 96px; }
@@ -68,6 +75,8 @@
   /* fade out the flat bottom edge of the bust */
   /* brightness(0) makes the gray black, invert(0.8) turns it light gray (#ccc) */
   .silhouette img { display: block; width: 100%; height: auto; filter: brightness(0) invert(0.8); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+  /* TEST Portrait_3: no gray filter; lighten lets the dark image background disappear into the intro */
+  .silhouette.is-art img { filter: none; mix-blend-mode: lighten; }
   @media (min-width: 860px) {
     /* left edge = left edge of .container (same indent as "Hello, I'm Jasmin"), right edge = screen edge */
     .intro_inner { --lead: max(16px, (100% + 2 * var(--pad-x) - 1140px) / 2); justify-self: stretch; width: auto; margin-left: calc(var(--lead) - var(--pad-x)); margin-right: calc(-1 * var(--pad-x)); grid-template-columns: auto 1fr; justify-items: start; text-align: left; gap: 0; }
@@ -101,9 +110,11 @@
   /* Two equal halves for Techstack and Skills */
   .skills_grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
   @media (min-width: 860px) { .skills_grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
-  /* Equal boxes: same width per column, same height everywhere (room for two lines) */
-  .chips { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 10px; }
-  .chips li { display: flex; align-items: center; min-height: 4.2em; padding: 0.6em 1.1em; border: 1px solid #cfcfcf; background: var(--white); font-size: 0.9rem; line-height: 1.5; color: var(--dark); }
+  /* Soft rounded pills in a light rosé tint; each pill is as wide as its text */
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .chips li { padding: 0.55em 1.2em; border-radius: 999px; background: rgba(192, 160, 148, 0.22); font-size: 0.9rem; line-height: 1.4; color: var(--dark); }
+  /* keep each skill on one line, except on very narrow phones where a long one may wrap */
+  @media (min-width: 420px) { .chips li { white-space: nowrap; } }
 
   /* Timeline (Experience / Education) */
   .timeline { list-style: none; margin: 0; padding: 0; }
@@ -116,6 +127,8 @@
   .tasks li::marker { color: var(--accent); }
   .timeline .date { font: 400 0.95rem 'Oswald', sans-serif; letter-spacing: 0.1em; color: var(--muted); }
   .timeline h3 { font-size: 1.3rem; }
+  /* second list inside a section, e.g. "Sprachaufenthalte" below the education */
+  .timeline_sub { font-size: 1.4rem; margin: 64px 0 20px; }
   .timeline .place { display: block; margin: 4px 0 10px; font-weight: 600; color: var(--accent); }
   .timeline p { margin: 0 0 8px; }
 
@@ -198,6 +211,27 @@
     .down_block { animation: none; }
     .js .reveal { opacity: 1; transform: none; transition: none; }
   }
+
+  /* TEST Rosé-Ton statt Blau (RGB 192, 160, 148). Zum Rückgängig machen diesen ganzen Block löschen. */
+  :root { --accent: #8c6b5f; --accent-soft: #c0a094; }   /* --accent: darker shade for text on white; --accent-soft: the chosen colour */
+  .tasks li::marker { color: var(--accent-soft); }
+  .tile::before { background: var(--accent-soft); }
+  .tile .more, .tile .num { color: var(--accent-soft); }
+  /* on the light hover colour, all tile text turns dark */
+  .tile:hover h3, .tile:hover p, .tile:hover .more, .tile:hover .tile_tags li,
+  .tile:has(:focus-visible) h3, .tile:has(:focus-visible) p, .tile:has(:focus-visible) .more, .tile:has(:focus-visible) .tile_tags li { color: var(--dark); }
+  .tile:hover .num, .tile:has(:focus-visible) .num { color: rgba(41, 41, 41, 0.3); }
+  .tile:hover .tile_tags li, .tile:has(:focus-visible) .tile_tags li { border-color: rgba(41, 41, 41, 0.4); }
+
+  /* TEST alle Texte im dunklen Intro in Rosé (inkl. Logo und Menü-Symbol, solange sie auf dem dunklen Intro stehen). Zum Rückgängig machen diesen Block löschen. */
+  .intro .great_title, .intro .great_subtitle, .intro .intro_label, .intro .down_block, .intro .btn-white { color: var(--accent-soft); }
+  .intro .btn-white:hover, .intro .btn-white:focus-visible { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--dark); }
+  .header:not(.solid):not(.open) .logo, .header:not(.solid):not(.open) .lang_switch { color: var(--accent-soft); }
+  .header:not(.solid):not(.open) .menu_btn span, .header:not(.solid):not(.open) .menu_btn span::before, .header:not(.solid):not(.open) .menu_btn span::after { background: var(--accent-soft); }
+
+  /* TEST alle weissen Texte im dunklen Kontakt-Bereich in Rosé. Zum Rückgängig machen diesen Block löschen. */
+  .contact .section_title, .contact p, .contact a:not(.btn), .contact .btn-white { color: var(--accent-soft); }
+  .contact .btn-white:hover, .contact .btn-white:focus-visible { background: var(--accent-soft); border-color: var(--accent-soft); color: var(--dark); }
 </style>
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -206,17 +240,21 @@
 <!-- Header -->
 <header class="header" id="header">
   <a class="logo" href="#top">Jasmin Marti</a>
-  <button class="menu_btn" id="menu_btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen"><span></span></button>
+  <div class="header_right">
+    <!-- Language switch: shows both languages, the active one is highlighted -->
+    <button class="lang_switch" id="lang_switch" type="button" aria-label="Switch to English" data-en-label="Auf Deutsch wechseln"><span data-lang="de">DE</span> | <span data-lang="en">EN</span></button>
+    <button class="menu_btn" id="menu_btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen"><span></span></button>
+  </div>
 
-  <nav class="menu" id="menu" aria-label="Hauptmenü">
+  <nav class="menu" id="menu" aria-label="Hauptmenü" data-en-label="Main menu">
     <ul>
-      <li><a href="#about">Über mich</a></li>
+      <li><a href="#about" data-en="About me">Über mich</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#experience">Berufserfahrung</a></li>
-      <li><a href="#education">Ausbildung</a></li>
-      <li><a href="#projects">Projekte</a></li>
-      <li><a href="#hobbies">Hobbys</a></li>
-      <li><a href="#contact">Kontakt</a></li>
+      <li><a href="#experience" data-en="Experience">Berufserfahrung</a></li>
+      <li><a href="#education" data-en="Education &amp; Training">Aus- und Weiterbildung</a></li>
+      <li><a href="#projects" data-en="Projects">Projekte</a></li>
+      <li><a href="#hobbies" data-en="Hobbies">Hobbys</a></li>
+      <li><a href="#contact" data-en="Contact">Kontakt</a></li>
     </ul>
   </nav>
 </header>
@@ -226,15 +264,17 @@
 <!-- Intro -->
 <section class="intro" id="top">
   <div class="intro_inner">
-    <div class="silhouette"><img src="portrait-silhouette.png" alt="" width="468" height="438"></div>
+    <!-- TEST Portrait_3. Zurück zur Silhouette: diese Zeile löschen und die nächste wieder aktivieren -->
+    <div class="silhouette is-art"><img src="portrait-3.jpg" alt="Illustriertes Porträt von Jasmin Marti" data-en-alt="Illustrated portrait of Jasmin Marti" width="740" height="830"></div>
+    <!-- <div class="silhouette"><img src="portrait-silhouette.png" alt="" width="468" height="438"></div> -->
     <div class="intro_text">
       <span class="intro_label">Portfolio</span>
       <h1 class="great_title">Jasmin Marti</h1>
-      <span class="great_subtitle">Application Managerin</span>
-      <div class="btns"><a href="#experience" class="btn btn-white">Lebenslauf</a><a href="#contact" class="btn btn-white">Kontakt</a></div>
+      <span class="great_subtitle" data-en="Application Manager">Application Managerin</span>
+      <div class="btns"><a href="#experience" class="btn btn-white" data-en="CV">Lebenslauf</a><a href="#contact" class="btn btn-white" data-en="Contact">Kontakt</a></div>
     </div>
   </div>
-  <a href="#about" class="down_block" aria-label="Nach unten scrollen">
+  <a href="#about" class="down_block" aria-label="Nach unten scrollen" data-en-label="Scroll down">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </a>
 </section>
@@ -243,19 +283,19 @@
 <section class="boxes" id="about">
   <div class="container">
     <div class="reveal">
-      <h4 class="sml_abs_title">Über mich</h4>
-      <h2 class="section_title">Hallo, ich bin Jasmin</h2>
+      <h4 class="sml_abs_title" data-en="About me">Über mich</h4>
+      <h2 class="section_title" data-en="Hi, I'm Jasmin">Hallo, ich bin Jasmin</h2>
     </div>
     <!-- title above both columns, so the facts start at the same height as the text -->
     <div class="two_cols">
     <div class="reveal">
-      <p>Ich bin eine offene und zugängliche Person und arbeite gerne dort, wo Tagesgeschäft und Projekte zusammenkommen. Als Process Owner für Microsoft Dynamics 365 Business Central arbeite ich seit drei Jahren an der Schnittstelle zwischen Fachbereichen, IT und externen Partnern – genau dort, wo Anforderungen entstehen und übersetzt werden müssen.</p>
-      <p>In der Zusammenarbeit sind mir Klarheit, gegenseitiger Respekt und Humor wichtig. Wenn ich nicht arbeite oder an der Berner Fachhochschule (BFH) studiere, bin ich meistens in den Bergen unterwegs – mit meinem Dachzelt oder zu Fuss.</p>
+      <p data-en="I am an open and approachable person who enjoys working where day-to-day business and projects come together. As Process Owner for Microsoft Dynamics 365 Business Central, I have spent the past three years working at the interface between business departments, IT and external partners – exactly where requirements arise and need to be translated.">Ich bin eine offene und zugängliche Person und arbeite gerne dort, wo Tagesgeschäft und Projekte zusammenkommen. Als Process Owner für Microsoft Dynamics 365 Business Central arbeite ich seit drei Jahren an der Schnittstelle zwischen Fachbereichen, IT und externen Partnern – genau dort, wo Anforderungen entstehen und übersetzt werden müssen.</p>
+      <p data-en="In collaboration, I value clarity, mutual respect and humour. When I'm not working or studying at Bern University of Applied Sciences (BFH), you'll usually find me in the mountains – with my rooftop tent or on foot.">In der Zusammenarbeit sind mir Klarheit, gegenseitiger Respekt und Humor wichtig. Wenn ich nicht arbeite oder an der Berner Fachhochschule (BFH) studiere, bin ich meistens in den Bergen unterwegs – mit meinem Dachzelt oder zu Fuss.</p>
     </div>
     <ul class="facts reveal">
-      <li><span>Wohnort</span><span>Bern</span></li>
-      <li><span>Sprachen</span><span>Deutsch, Englisch, Französisch, Spanisch</span></li>
-      <li><span>E-Mail</span><span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></span></li>
+      <li><span data-en="Location">Wohnort</span><span>Bern</span></li>
+      <li><span data-en="Languages">Sprachen</span><span><span data-en="German (native)">Deutsch (Muttersprache)</span><br><span data-en="English (fluent)">Englisch (fliessend)</span><br><span data-en="French (fluent)">Französisch (fliessend)</span><br><span data-en="Spanish (basic)">Spanisch (Grundkenntnisse)</span></span></li>
+      <li><span data-en="E-mail">E-Mail</span><span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></span></li>
     </ul>
     </div>
   </div>
@@ -265,27 +305,27 @@
 <section class="boxes alt" id="skills">
   <div class="container">
     <h4 class="sml_abs_title reveal">Skills</h4>
-    <h2 class="section_title reveal">Skills &amp; Techstack</h2>
+    <h2 class="section_title reveal" data-en="Skills &amp; Tech Stack">Skills &amp; Techstack</h2>
     <div class="skills_grid">
       <div class="skill_group reveal">
-        <h3>Techstack</h3>
+        <h3 data-en="Tech Stack">Techstack</h3>
         <ul class="chips">
           <li>Microsoft Dynamics 365 Business Central</li>
-          <li>EDI/DESADV, Azure Events (Monitoring)</li>
-          <li>Power BI (Auswertungen &amp; Anforderungen)</li>
-          <li>Excel/VBA-Programmierung</li>
-          <li>SQL, Python (Studium)</li>
+          <li data-en="EDI/DESADV, Azure Events (monitoring)">EDI/DESADV, Azure Events (Monitoring)</li>
+          <li data-en="Power BI (reporting &amp; requirements)">Power BI (Auswertungen &amp; Anforderungen)</li>
+          <li data-en="Excel/VBA programming">Excel/VBA-Programmierung</li>
+          <li data-en="SQL, Python (studies)">SQL, Python (Studium)</li>
         </ul>
       </div>
       <div class="skill_group reveal">
         <h3>Skills</h3>
         <ul class="chips">
-          <li>Anforderungsanalyse</li>
-          <li>Prozessmodellierung (BPMN)</li>
-          <li>Prozessoptimierung &amp; Dokumentation</li>
-          <li>Abnahmetests (UAT)</li>
-          <li>Schulungskonzeption &amp;&nbsp;&#8209;durchführung</li>
-          <li>Projekt- und Teilprojektleitung</li>
+          <li data-en="Requirements analysis">Anforderungsanalyse</li>
+          <li data-en="Process modelling (BPMN)">Prozessmodellierung (BPMN)</li>
+          <li data-en="Process optimisation &amp; documentation">Prozessoptimierung &amp; Dokumentation</li>
+          <li data-en="User acceptance testing (UAT)">Abnahmetests (UAT)</li>
+          <li data-en="Training design &amp; delivery">Schulungskonzeption &amp;&nbsp;&#8209;durchführung</li>
+          <li data-en="Project &amp; sub-project management">Projekt- und Teilprojektleitung</li>
         </ul>
       </div>
     </div>
@@ -295,82 +335,78 @@
 <!-- Experience -->
 <section class="boxes" id="experience">
   <div class="container">
-    <h4 class="sml_abs_title reveal">Lebenslauf</h4>
-    <h2 class="section_title reveal">Berufserfahrung</h2>
+    <h4 class="sml_abs_title reveal" data-en="CV">Lebenslauf</h4>
+    <h2 class="section_title reveal" data-en="Experience">Berufserfahrung</h2>
     <ul class="timeline">
       <li class="reveal">
-        <span class="date">2023 – heute</span>
+        <span class="date" data-en="2023 – present">2023 – heute</span>
         <div>
-          <h3>Fachspezialistin Prozesse Einkauf und Warenwirtschaft</h3>
-          <span class="place">Transa Backpacking AG, Zürich</span>
+          <h3 data-en="Process Specialist, Purchasing and Merchandise Management">Fachspezialistin Prozesse Einkauf und Warenwirtschaft</h3>
+          <span class="place" data-en="Transa Backpacking AG, Zurich">Transa Backpacking AG, Zürich</span>
           <ul class="tasks">
-            <li>Process Ownerin für die Integration von Einkauf und Warenwirtschaft in 4 neuen Filialen</li>
-            <li>Projektleitung ERP-Systemumstellung von Microsoft Navision (NAV) zu Microsoft Business Central für die Abteilungen Einkauf, Warenwirtschaft und Logistik: Anforderungsanalyse, Prozessstandardisierung, UAT-Testing</li>
-            <li>Schulungskonzept entwickelt und durchgeführt</li>
-            <li>Datenqualität und Importprozesse (EDI/DESADV) verantwortet</li>
-            <li>Manuelle Prozesse analysiert, Automatisierungspotenzial identifiziert und mittels VBA-Makros umgesetzt</li>
-            <li>Anforderungen für Power BI Reports definiert, Umsetzung der Reports begleitet und in operative Prozesse integriert</li>
+            <li data-en="Process Owner for integrating purchasing and merchandise management into 4 new stores">Process Ownerin für die Integration von Einkauf und Warenwirtschaft in 4 neuen Filialen</li>
+            <li data-en="Project lead for the ERP migration from Microsoft Navision (NAV) to Microsoft Business Central for the purchasing, merchandise management and logistics departments: requirements analysis, process standardisation, UAT">Projektleitung ERP-Systemumstellung von Microsoft Navision (NAV) zu Microsoft Business Central für die Abteilungen Einkauf, Warenwirtschaft und Logistik: Anforderungsanalyse, Prozessstandardisierung, UAT-Testing</li>
+            <li data-en="Developed and delivered a training concept">Schulungskonzept entwickelt und durchgeführt</li>
+            <li data-en="Responsible for data quality and import processes (EDI/DESADV)">Datenqualität und Importprozesse (EDI/DESADV) verantwortet</li>
+            <li data-en="Analysed manual processes, identified automation potential and implemented it with VBA macros">Manuelle Prozesse analysiert, Automatisierungspotenzial identifiziert und mittels VBA-Makros umgesetzt</li>
+            <li data-en="Defined requirements for Power BI reports, supported their implementation and integrated them into operational processes">Anforderungen für Power BI Reports definiert, Umsetzung der Reports begleitet und in operative Prozesse integriert</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2020 – 2023</span>
         <div>
-          <h3>Sachbearbeiterin Warenwirtschaft</h3>
-          <span class="place">Transa Backpacking AG, Zürich</span>
-          <p>Neben den Sachbearbeitungsaufgaben konnte ich mich bei Transa Backpacking in folgenden Bereichen weiterentwickeln:</p>
+          <h3 data-en="Merchandise Management Administrator">Sachbearbeiterin Warenwirtschaft</h3>
+          <span class="place" data-en="Transa Backpacking AG, Zurich">Transa Backpacking AG, Zürich</span>
+          <p data-en="Alongside my administrative tasks, I was able to develop further at Transa Backpacking in the following areas:">Neben den Sachbearbeitungsaufgaben konnte ich mich bei Transa Backpacking in folgenden Bereichen weiterentwickeln:</p>
           <ul class="tasks">
-            <li>Optimierung und Automatisierung der Arbeitsabläufe</li>
-            <li>Navision-Systemerweiterungen in Zusammenarbeit mit der IT</li>
+            <li data-en="Optimising and automating workflows">Optimierung und Automatisierung der Arbeitsabläufe</li>
+            <li data-en="Navision system extensions in collaboration with IT">Navision-Systemerweiterungen in Zusammenarbeit mit der IT</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2019 – 2020</span>
         <div>
-          <h3>Empfangsmitarbeiterin</h3>
+          <h3 data-en="Receptionist">Empfangsmitarbeiterin</h3>
           <span class="place">Hotel Excelsior, Arosa</span>
-          <p>Nach meiner Weltreise habe ich in Arosa eine Saisonstelle angetreten. Gäste aus verschiedenen Ländern zu betreuen, hat mir viel Freude bereitet.</p>
+          <p data-en="After my world trip, I took on a seasonal position in Arosa. Looking after guests from many different countries was a real pleasure.">Nach meiner Weltreise habe ich in Arosa eine Saisonstelle angetreten. Gäste aus verschiedenen Ländern zu betreuen, hat mir viel Freude bereitet.</p>
           <ul class="tasks">
-            <li>Organisation und Unterstützung eines reibungslosen Ablaufs am Empfang</li>
+            <li data-en="Organising and supporting smooth front-desk operations">Organisation und Unterstützung eines reibungslosen Ablaufs am Empfang</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2018 – 2019</span>
         <div>
-          <h3>Weltreise</h3>
-          <span class="place">Papua-Neuguinea, Neuseeland, Alaska, Kanada</span>
+          <h3 data-en="World trip">Weltreise</h3>
+          <span class="place" data-en="Papua New Guinea, New Zealand, Alaska, Canada">Papua-Neuguinea, Neuseeland, Alaska, Kanada</span>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2015 – 2018</span>
         <div>
-          <h3>Kauffrau Import/Export</h3>
-          <span class="place">INUIKII AG, Zürich</span>
+          <h3 data-en="Import/Export Clerk">Kauffrau Import/Export</h3>
+          <span class="place" data-en="INUIKII AG, Zurich">INUIKII AG, Zürich</span>
           <ul class="tasks">
-            <li>Organisation und Koordination des gesamten Warenprozesses</li>
-            <li>Volle Verantwortung für den kompletten Bereich Import und Export</li>
-            <li>Prozessoptimierung und -gestaltung</li>
+            <li data-en="Organisation and coordination of the entire flow of goods">Organisation und Koordination des gesamten Warenprozesses</li>
+            <li data-en="Full responsibility for the entire import and export area">Volle Verantwortung für den kompletten Bereich Import und Export</li>
+            <li data-en="Process optimisation and design">Prozessoptimierung und -gestaltung</li>
           </ul>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2014 – 2015</span>
         <div>
-          <h3>Weltreise</h3>
-          <span class="place">Afrika, Indien, Borneo, Australien, Südamerika, Mittelamerika</span>
-          <ul class="tasks">
-            <li>Sprachaufenthalt in Kapstadt</li>
-            <li>Students-Coordinator an einer Sprachschule in Indien</li>
-            <li>Sprachaufenthalt in Peru</li>
-          </ul>
+          <h3 data-en="World trip">Weltreise</h3>
+          <span class="place" data-en="Africa, India, Borneo, Australia, South America, Central America">Afrika, Indien, Borneo, Australien, Südamerika, Mittelamerika</span>
+          <p><span data-en="Including language stays in Cape Town, Goa and Cusco (see">Mit Sprachaufenthalten in Kapstadt, Goa und Cusco (siehe</span> <a href="#education" data-en="Education &amp; Training">Aus- und Weiterbildung</a>).</p>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2009 – 2013</span>
         <div>
-          <h3>Geschäftsleitungs-Assistentin</h3>
+          <h3 data-en="Executive Assistant">Geschäftsleitungs-Assistentin</h3>
           <span class="place">Heizteam Savaris AG, Brugg</span>
         </div>
       </li>
@@ -381,21 +417,67 @@
 <!-- Education -->
 <section class="boxes alt" id="education">
   <div class="container">
-    <h4 class="sml_abs_title reveal">Lebenslauf</h4>
-    <h2 class="section_title reveal">Ausbildung</h2>
+    <h4 class="sml_abs_title reveal" data-en="CV">Lebenslauf</h4>
+    <h2 class="section_title reveal" data-en="Education &amp; Training">Aus- und Weiterbildung</h2>
     <ul class="timeline">
       <li class="reveal">
-        <span class="date">2024 – heute</span>
+        <span class="date" data-en="2024 – present">2024 – heute</span>
         <div>
           <h3>Bachelor Digital Business &amp; AI</h3>
-          <span class="place">Berner Fachhochschule, Bern</span>
+          <span class="place" data-en="Bern University of Applied Sciences, Bern">Berner Fachhochschule, Bern</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="date">01.2026</span>
+        <div>
+          <h3>Certified Professional for Requirements Engineering</h3>
+          <span class="place">Bern</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="date">04.2012 – 12.2012</span>
+        <div>
+          <h3 data-en="Event Manager (Diploma)">Dipl. Eventmanager</h3>
+          <span class="place">Baden</span>
         </div>
       </li>
       <li class="reveal">
         <span class="date">2006 – 2009</span>
         <div>
-          <h3>Kauffrau EFZ mit Berufsmatur</h3>
-          <span class="place">Berufs- und Weiterbildungszentrum, Brugg</span>
+          <h3 data-en="Commercial Apprenticeship (Federal VET Diploma) with Vocational Baccalaureate">Kauffrau EFZ mit Berufsmatur</h3>
+          <span class="place" data-en="Vocational and Further Education Centre, Brugg">Berufs- und Weiterbildungszentrum, Brugg</span>
+        </div>
+      </li>
+    </ul>
+
+    <h3 class="timeline_sub reveal" data-en="Language stays">Sprachaufenthalte</h3>
+    <ul class="timeline">
+      <li class="reveal">
+        <span class="date">09.2014 – 10.2014</span>
+        <div>
+          <h3 data-en="Volunteer work with street children and Spanish lessons">Volontärarbeit mit Strassenkindern und Spanischunterricht</h3>
+          <span class="place" data-en="Cusco, Peru · Spanish">Cusco, Peru · Spanisch</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="date">04.2014 – 06.2014</span>
+        <div>
+          <h3>Students Coordinator, Incredible English School</h3>
+          <span class="place" data-en="Goa, India · English">Goa, Indien · Englisch</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="date">02.2014</span>
+        <div>
+          <h3 data-en="Language stay">Sprachaufenthalt</h3>
+          <span class="place" data-en="Cape Town, South Africa · English">Kapstadt, Südafrika · Englisch</span>
+        </div>
+      </li>
+      <li class="reveal">
+        <span class="date">08.2005 – 08.2006</span>
+        <div>
+          <h3 data-en="Au pair">Au-pair</h3>
+          <span class="place" data-en="Lavey-Village, Switzerland · French">Lavey-Village, Schweiz · Französisch</span>
         </div>
       </li>
     </ul>
@@ -406,136 +488,136 @@
 <section class="boxes" id="projects">
   <div class="container">
     <h4 class="sml_abs_title reveal">Portfolio</h4>
-    <h2 class="section_title reveal">Projekte</h2>
+    <h2 class="section_title reveal" data-en="Projects">Projekte</h2>
   </div>
   <div class="container tiles reveal">
     <article class="tile">
       <span class="num">01</span>
-      <h3>ERP-Umstellung auf Business Central</h3>
-      <p>Wechsel von Microsoft Navision (NAV) zu Microsoft Dynamics 365 Business Central für Einkauf, Warenwirtschaft und Logistik.</p>
-      <ul class="tile_tags"><li>Anforderungsanalyse</li><li>Prozessstandardisierung</li><li>UAT-Testing</li></ul>
-      <span class="more">Teilprojektleitung</span>
-      <button type="button" class="tile_open" data-project="projekt-1">Details ansehen &rarr;</button>
+      <h3 data-en="ERP migration to Business Central">ERP-Umstellung auf Business Central</h3>
+      <p data-en="Migration from Microsoft Navision (NAV) to Microsoft Dynamics 365 Business Central for purchasing, merchandise management and logistics.">Wechsel von Microsoft Navision (NAV) zu Microsoft Dynamics 365 Business Central für Einkauf, Warenwirtschaft und Logistik.</p>
+      <ul class="tile_tags"><li data-en="Requirements analysis">Anforderungsanalyse</li><li data-en="Process standardisation">Prozessstandardisierung</li><li data-en="UAT testing">UAT-Testing</li></ul>
+      <span class="more" data-en="Sub-project lead">Teilprojektleitung</span>
+      <button type="button" class="tile_open" data-project="projekt-1" data-en="View details →">Details ansehen &rarr;</button>
     </article>
     <article class="tile">
       <span class="num">02</span>
-      <h3>WMS-Schnittstelle zum Lagerdienstleister</h3>
-      <p>Anbindung des neuen Lagerverwaltungssystems (WMS) unseres externen Lagerdienstleisters an Microsoft Business Central.</p>
-      <ul class="tile_tags"><li>Prozessaufnahme</li><li>Prozessanpassung BC</li><li>Schnittstelle</li><li>Testing</li><li>Schulung</li></ul>
-      <span class="more">Process Ownerin</span>
-      <button type="button" class="tile_open" data-project="projekt-2">Details ansehen &rarr;</button>
+      <h3 data-en="WMS interface to the logistics provider">WMS-Schnittstelle zum Lagerdienstleister</h3>
+      <p data-en="Connecting our external logistics provider's new warehouse management system (WMS) to Microsoft Business Central.">Anbindung des neuen Lagerverwaltungssystems (WMS) unseres externen Lagerdienstleisters an Microsoft Business Central.</p>
+      <ul class="tile_tags"><li data-en="Process mapping">Prozessaufnahme</li><li data-en="BC process adaptation">Prozessanpassung BC</li><li data-en="Interface">Schnittstelle</li><li>Testing</li><li data-en="Training">Schulung</li></ul>
+      <span class="more" data-en="Process Owner">Process Ownerin</span>
+      <button type="button" class="tile_open" data-project="projekt-2" data-en="View details →">Details ansehen &rarr;</button>
     </article>
     <article class="tile">
       <span class="num">03</span>
-      <h3>Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
-      <p>Filialen scannen den EAN-Code mit dem MDE-Gerät: Ein Signalton zeigt sofort, ob der Artikel in den Ausverkauf kommt, und der neue Preis wird angezeigt. Knackpunkt: Die Angebote sind zu diesem Zeitpunkt noch nicht aktiv – gelöst über eine spezielle Angebotsbezeichnung.</p>
-      <ul class="tile_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Filialprozesse</li></ul>
-      <span class="more">Konzept &amp; Umsetzung</span>
-      <button type="button" class="tile_open" data-project="projekt-3">Details ansehen &rarr;</button>
+      <h3 data-en="Clearance sale via MDE scanner instead of Excel list">Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
+      <p data-en="Stores scan the EAN code with the MDE device: a beep instantly shows whether the item is part of the clearance sale, and the new price is displayed. The catch: the offers are not yet active at that point – solved with a special offer name.">Filialen scannen den EAN-Code mit dem MDE-Gerät: Ein Signalton zeigt sofort, ob der Artikel in den Ausverkauf kommt, und der neue Preis wird angezeigt. Knackpunkt: Die Angebote sind zu diesem Zeitpunkt noch nicht aktiv – gelöst über eine spezielle Angebotsbezeichnung.</p>
+      <ul class="tile_tags"><li data-en="MDE scanning">MDE-Scanning</li><li>Business Central</li><li data-en="Store processes">Filialprozesse</li></ul>
+      <span class="more" data-en="Concept &amp; implementation">Konzept &amp; Umsetzung</span>
+      <button type="button" class="tile_open" data-project="projekt-3" data-en="View details →">Details ansehen &rarr;</button>
     </article>
     <article class="tile">
       <span class="num">04</span>
-      <h3>Meldebestände per MDE Scan-Gerät anfragen</h3>
-      <p>Statt anzurufen, scannen Filialmitarbeitende den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein. Der Einkauf sieht die Anfragen direkt in seiner Kachel in Business Central und gibt sie frei oder lehnt sie ab.</p>
-      <ul class="tile_tags"><li>MDE-Scanning</li><li>Freigabe-Workflow</li><li>Business Central</li></ul>
-      <span class="more">Konzept &amp; Umsetzung</span>
-      <button type="button" class="tile_open" data-project="projekt-4">Details ansehen &rarr;</button>
+      <h3 data-en="Requesting reorder points via MDE scanner">Meldebestände per MDE Scan-Gerät anfragen</h3>
+      <p data-en="Instead of calling, store staff scan the EAN code with the MDE device and enter the desired reorder point. Purchasing sees the requests directly in a tile in Business Central and approves or rejects them.">Statt anzurufen, scannen Filialmitarbeitende den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein. Der Einkauf sieht die Anfragen direkt in seiner Kachel in Business Central und gibt sie frei oder lehnt sie ab.</p>
+      <ul class="tile_tags"><li data-en="MDE scanning">MDE-Scanning</li><li data-en="Approval workflow">Freigabe-Workflow</li><li>Business Central</li></ul>
+      <span class="more" data-en="Concept &amp; implementation">Konzept &amp; Umsetzung</span>
+      <button type="button" class="tile_open" data-project="projekt-4" data-en="View details →">Details ansehen &rarr;</button>
     </article>
   </div>
 </section>
 
 <!-- Project details (opened by the "Details ansehen" buttons in the tiles) -->
 <dialog class="project_dialog" id="projekt-1" aria-labelledby="projekt-1-title">
-  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <button type="button" class="dlg_close" aria-label="Schliessen" data-en-label="Close">&times;</button>
   <div class="dlg_inner">
-    <div class="dlg_head"><span class="dlg_num">01</span><span class="dlg_role">Teilprojektleitung</span></div>
-    <h3 id="projekt-1-title">ERP-Umstellung auf Business Central</h3>
-    <h4>Ausgangslage</h4>
-    <p>Microsoft Navision (NAV) hatte das Ende seines Lebenszyklus erreicht. Es gab keine Updates mehr und Anpassungen oder Wartung waren kaum noch möglich. Deshalb stellte Transa Backpacking AG auf Microsoft Dynamics 365 Business Central um.</p>
-    <h4>Meine Rolle</h4>
-    <p>Teilprojektleitung für die Abteilungen Einkauf, Warenwirtschaft und Logistik. Die Gesamtprojektleitung lag bei der internen IT.</p>
-    <h4>Umsetzung</h4>
+    <div class="dlg_head"><span class="dlg_num">01</span><span class="dlg_role" data-en="Sub-project lead">Teilprojektleitung</span></div>
+    <h3 id="projekt-1-title" data-en="ERP migration to Business Central">ERP-Umstellung auf Business Central</h3>
+    <h4 data-en="Background">Ausgangslage</h4>
+    <p data-en="Microsoft Navision (NAV) had reached the end of its life cycle: there were no more updates, and changes or maintenance were hardly possible any more. Transa Backpacking AG therefore migrated to Microsoft Dynamics 365 Business Central.">Microsoft Navision (NAV) hatte das Ende seines Lebenszyklus erreicht. Es gab keine Updates mehr und Anpassungen oder Wartung waren kaum noch möglich. Deshalb stellte Transa Backpacking AG auf Microsoft Dynamics 365 Business Central um.</p>
+    <h4 data-en="My role">Meine Rolle</h4>
+    <p data-en="Sub-project lead for the purchasing, merchandise management and logistics departments. Overall project management was with the internal IT department.">Teilprojektleitung für die Abteilungen Einkauf, Warenwirtschaft und Logistik. Die Gesamtprojektleitung lag bei der internen IT.</p>
+    <h4 data-en="Implementation">Umsetzung</h4>
     <ul>
-      <li>Anforderungen der Fachbereiche aufgenommen und analysiert</li>
-      <li>Prozesse für Einkauf, Warenwirtschaft und Logistik standardisiert</li>
-      <li>User Acceptance Tests (UAT) geplant und durchgeführt</li>
-      <li>Schulungen für Einkauf und Warenwirtschaft durchgeführt</li>
-      <li>Schulungsdokumentation für Einkauf, Warenwirtschaft und Logistik erstellt</li>
+      <li data-en="Gathered and analysed the business departments' requirements">Anforderungen der Fachbereiche aufgenommen und analysiert</li>
+      <li data-en="Standardised processes for purchasing, merchandise management and logistics">Prozesse für Einkauf, Warenwirtschaft und Logistik standardisiert</li>
+      <li data-en="Planned and carried out user acceptance tests (UAT)">User Acceptance Tests (UAT) geplant und durchgeführt</li>
+      <li data-en="Delivered training for purchasing and merchandise management">Schulungen für Einkauf und Warenwirtschaft durchgeführt</li>
+      <li data-en="Created training documentation for purchasing, merchandise management and logistics">Schulungsdokumentation für Einkauf, Warenwirtschaft und Logistik erstellt</li>
     </ul>
-    <h4>Ergebnis</h4>
-    <p>Go-live 2024 für rund 40 Benutzer:innen in Einkauf, Warenwirtschaft und Logistik. Heute stehen bessere Tracking-Möglichkeiten, übersichtlichere Ansichten und genauere Lagerhaltungsdaten zur Verfügung – und Business Central berechnet Bestellvorschläge automatisch.</p>
-    <ul class="dlg_tags"><li>Anforderungsanalyse</li><li>Prozessstandardisierung</li><li>UAT-Testing</li><li>Business Central</li></ul>
+    <h4 data-en="Result">Ergebnis</h4>
+    <p data-en="Go-live in 2024 for around 40 users in purchasing, merchandise management and logistics. Today there are better tracking options, clearer views and more accurate inventory data – and Business Central calculates purchase suggestions automatically.">Go-live 2024 für rund 40 Benutzer:innen in Einkauf, Warenwirtschaft und Logistik. Heute stehen bessere Tracking-Möglichkeiten, übersichtlichere Ansichten und genauere Lagerhaltungsdaten zur Verfügung – und Business Central berechnet Bestellvorschläge automatisch.</p>
+    <ul class="dlg_tags"><li data-en="Requirements analysis">Anforderungsanalyse</li><li data-en="Process standardisation">Prozessstandardisierung</li><li data-en="UAT testing">UAT-Testing</li><li>Business Central</li></ul>
   </div>
 </dialog>
 
 <dialog class="project_dialog" id="projekt-2" aria-labelledby="projekt-2-title">
-  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <button type="button" class="dlg_close" aria-label="Schliessen" data-en-label="Close">&times;</button>
   <div class="dlg_inner">
-    <div class="dlg_head"><span class="dlg_num">02</span><span class="dlg_role">Process Ownerin</span></div>
-    <h3 id="projekt-2-title">WMS-Schnittstelle zum Lagerdienstleister</h3>
-    <h4>Ausgangslage</h4>
-    <p>Unser externer Lagerdienstleister führte ein eigenes Lagerverwaltungssystem (WMS) ein. Damit Bestellungen, Wareneingänge und Lieferungen weiterhin reibungslos laufen, musste das neue System an Microsoft Business Central angebunden werden.</p>
-    <h4>Meine Rolle</h4>
-    <p>Als Process Ownerin war ich für alle fachlichen und technischen Themen auf der Business-Central-Seite verantwortlich. Die Projektleitung lag bei einer anderen Person.</p>
-    <h4>Umsetzung</h4>
+    <div class="dlg_head"><span class="dlg_num">02</span><span class="dlg_role" data-en="Process Owner">Process Ownerin</span></div>
+    <h3 id="projekt-2-title" data-en="WMS interface to the logistics provider">WMS-Schnittstelle zum Lagerdienstleister</h3>
+    <h4 data-en="Background">Ausgangslage</h4>
+    <p data-en="Our external logistics provider introduced its own warehouse management system (WMS). To keep orders, goods receipts and deliveries running smoothly, the new system had to be connected to Microsoft Business Central.">Unser externer Lagerdienstleister führte ein eigenes Lagerverwaltungssystem (WMS) ein. Damit Bestellungen, Wareneingänge und Lieferungen weiterhin reibungslos laufen, musste das neue System an Microsoft Business Central angebunden werden.</p>
+    <h4 data-en="My role">Meine Rolle</h4>
+    <p data-en="As Process Owner, I was responsible for all functional and technical topics on the Business Central side. Project management was handled by another person.">Als Process Ownerin war ich für alle fachlichen und technischen Themen auf der Business-Central-Seite verantwortlich. Die Projektleitung lag bei einer anderen Person.</p>
+    <h4 data-en="Implementation">Umsetzung</h4>
     <ul>
-      <li>Bestehende Prozesse zusammen mit den Fachbereichen aufgenommen</li>
-      <li>Business-Central-Prozesse angepasst, wo es für die Schnittstelle nötig war</li>
-      <li>Notwendige Weiterentwicklungen für die Schnittstelle mit der externen IT definiert und umgesetzt</li>
-      <li>Schnittstelle getestet</li>
-      <li>Mitarbeitende auf die neuen Abläufe geschult</li>
+      <li data-en="Mapped existing processes together with the business departments">Bestehende Prozesse zusammen mit den Fachbereichen aufgenommen</li>
+      <li data-en="Adapted Business Central processes where required for the interface">Business-Central-Prozesse angepasst, wo es für die Schnittstelle nötig war</li>
+      <li data-en="Defined and implemented the necessary enhancements for the interface together with the external IT team">Notwendige Weiterentwicklungen für die Schnittstelle mit der externen IT definiert und umgesetzt</li>
+      <li data-en="Tested the interface">Schnittstelle getestet</li>
+      <li data-en="Trained staff on the new workflows">Mitarbeitende auf die neuen Abläufe geschult</li>
     </ul>
-    <h4>Ergebnis</h4>
-    <p>Go-live 2026. Das Lager scannt Wareneingänge jetzt direkt gegen die gelieferte Ware. Bisher mussten Wareneingänge komplett eröffnet und nicht gelieferte Zeilen vorgängig gelöscht werden. Gerüstet wird neu laufwegoptimiert, mit einem System, das auf die Bedürfnisse eines Lagers zugeschnitten ist statt auf den Detailhandel. Weil das WMS extern gehostet wird, braucht es keine eigene Infrastruktur vor Ort, und die laufenden Betriebskosten sinken.</p>
-    <ul class="dlg_tags"><li>Prozessaufnahme</li><li>Prozessanpassung BC</li><li>Schnittstellen</li><li>Testing</li><li>Schulung</li></ul>
+    <h4 data-en="Result">Ergebnis</h4>
+    <p data-en="Go-live in 2026. The warehouse now scans goods receipts directly against the delivered goods – previously, goods receipts had to be opened in full and lines that were not delivered had to be deleted beforehand. Picking is now route-optimised, using a system built for the needs of a warehouse rather than for retail. Because the WMS is hosted externally, no on-site infrastructure is needed and running costs are lower.">Go-live 2026. Das Lager scannt Wareneingänge jetzt direkt gegen die gelieferte Ware. Bisher mussten Wareneingänge komplett eröffnet und nicht gelieferte Zeilen vorgängig gelöscht werden. Gerüstet wird neu laufwegoptimiert, mit einem System, das auf die Bedürfnisse eines Lagers zugeschnitten ist statt auf den Detailhandel. Weil das WMS extern gehostet wird, braucht es keine eigene Infrastruktur vor Ort, und die laufenden Betriebskosten sinken.</p>
+    <ul class="dlg_tags"><li data-en="Process mapping">Prozessaufnahme</li><li data-en="BC process adaptation">Prozessanpassung BC</li><li data-en="Interfaces">Schnittstellen</li><li>Testing</li><li data-en="Training">Schulung</li></ul>
   </div>
 </dialog>
 
 <dialog class="project_dialog" id="projekt-3" aria-labelledby="projekt-3-title">
-  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <button type="button" class="dlg_close" aria-label="Schliessen" data-en-label="Close">&times;</button>
   <div class="dlg_inner">
-    <div class="dlg_head"><span class="dlg_num">03</span><span class="dlg_role">Konzept &amp; Umsetzung</span></div>
-    <h3 id="projekt-3-title">Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
-    <h4>Ausgangslage</h4>
-    <p>Die Filialen mussten Ausverkaufsware manuell rabattieren, Artikel in einer Excel-Liste suchen, prüfen, ob der Artikel überhaupt in den Ausverkauf kommt, den Preis eingeben und das Etikett drucken. Das war zeitaufwendig und fehleranfällig.</p>
-    <h4>Lösung</h4>
-    <p>Neu scannen die Mitarbeitenden den EAN-Code mit dem MDE-Gerät. Ein Signalton zeigt sofort, ob für den Artikel ein Ausverkaufsangebot existiert, und das Gerät zeigt gleich den Preis an, auf den rabattiert werden muss.</p>
-    <h4>Die Herausforderung</h4>
-    <p>Zum Zeitpunkt der Vorbereitung sind die Angebote im System noch nicht aktiv. Gelöst habe ich das über den Angebotsnamen. Er zeigt beim Scannen, ob der Artikel in den Ausverkauf kommt und zu welchem Preis, auch wenn das Angebot selbst noch nicht aktiv ist.</p>
-    <h4>Ergebnis</h4>
-    <p>Im Einsatz in 12 Filialen. Die Mitarbeitenden müssen nicht mehr in Listen suchen und sehen den korrekten Ausverkaufspreis direkt auf dem Gerät. Das macht das Rabattieren schneller und weniger fehleranfällig.</p>
-    <ul class="dlg_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Prozessautomatisierung</li><li>Filialprozesse</li></ul>
+    <div class="dlg_head"><span class="dlg_num">03</span><span class="dlg_role" data-en="Concept &amp; implementation">Konzept &amp; Umsetzung</span></div>
+    <h3 id="projekt-3-title" data-en="Clearance sale via MDE scanner instead of Excel list">Ausverkauf per MDE Scan-Gerät statt Excel-Liste</h3>
+    <h4 data-en="Background">Ausgangslage</h4>
+    <p data-en="Stores had to mark down clearance items manually: look up items in an Excel list, check whether the item was part of the clearance sale at all, enter the price and print the label. This was time-consuming and error-prone.">Die Filialen mussten Ausverkaufsware manuell rabattieren, Artikel in einer Excel-Liste suchen, prüfen, ob der Artikel überhaupt in den Ausverkauf kommt, den Preis eingeben und das Etikett drucken. Das war zeitaufwendig und fehleranfällig.</p>
+    <h4 data-en="Solution">Lösung</h4>
+    <p data-en="Staff now scan the EAN code with the MDE device. A beep instantly shows whether there is a clearance offer for the item, and the device displays the price to mark it down to.">Neu scannen die Mitarbeitenden den EAN-Code mit dem MDE-Gerät. Ein Signalton zeigt sofort, ob für den Artikel ein Ausverkaufsangebot existiert, und das Gerät zeigt gleich den Preis an, auf den rabattiert werden muss.</p>
+    <h4 data-en="The challenge">Die Herausforderung</h4>
+    <p data-en="At the time of preparation, the offers are not yet active in the system. I solved this via the offer name: when scanning, it shows whether the item is part of the clearance sale and at what price – even though the offer itself is not yet active.">Zum Zeitpunkt der Vorbereitung sind die Angebote im System noch nicht aktiv. Gelöst habe ich das über den Angebotsnamen. Er zeigt beim Scannen, ob der Artikel in den Ausverkauf kommt und zu welchem Preis, auch wenn das Angebot selbst noch nicht aktiv ist.</p>
+    <h4 data-en="Result">Ergebnis</h4>
+    <p data-en="In use in 12 stores. Staff no longer have to search through lists and see the correct clearance price directly on the device. This makes marking down faster and less error-prone.">Im Einsatz in 12 Filialen. Die Mitarbeitenden müssen nicht mehr in Listen suchen und sehen den korrekten Ausverkaufspreis direkt auf dem Gerät. Das macht das Rabattieren schneller und weniger fehleranfällig.</p>
+    <ul class="dlg_tags"><li data-en="MDE scanning">MDE-Scanning</li><li>Business Central</li><li data-en="Process automation">Prozessautomatisierung</li><li data-en="Store processes">Filialprozesse</li></ul>
   </div>
 </dialog>
 
 <dialog class="project_dialog" id="projekt-4" aria-labelledby="projekt-4-title">
-  <button type="button" class="dlg_close" aria-label="Schliessen">&times;</button>
+  <button type="button" class="dlg_close" aria-label="Schliessen" data-en-label="Close">&times;</button>
   <div class="dlg_inner">
-    <div class="dlg_head"><span class="dlg_num">04</span><span class="dlg_role">Konzept &amp; Umsetzung</span></div>
-    <h3 id="projekt-4-title">Meldebestände per MDE Scan-Gerät anfragen</h3>
-    <h4>Ausgangslage</h4>
-    <p>Wollten Filialmitarbeitende auf der Verkaufsfläche den Meldebestand eines Artikels erhöhen, mussten sie den Einkauf anrufen. Das kostete beide Seiten Zeit, und einzelne Anfragen konnten untergehen.</p>
-    <h4>Lösung</h4>
+    <div class="dlg_head"><span class="dlg_num">04</span><span class="dlg_role" data-en="Concept &amp; implementation">Konzept &amp; Umsetzung</span></div>
+    <h3 id="projekt-4-title" data-en="Requesting reorder points via MDE scanner">Meldebestände per MDE Scan-Gerät anfragen</h3>
+    <h4 data-en="Background">Ausgangslage</h4>
+    <p data-en="If store staff wanted to increase the reorder point of an item, they had to call purchasing. This cost both sides time, and individual requests could get lost.">Wollten Filialmitarbeitende auf der Verkaufsfläche den Meldebestand eines Artikels erhöhen, mussten sie den Einkauf anrufen. Das kostete beide Seiten Zeit, und einzelne Anfragen konnten untergehen.</p>
+    <h4 data-en="Solution">Lösung</h4>
     <ul>
-      <li>Die Mitarbeitenden scannen den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein.</li>
-      <li>Im Einkauf erscheint die Anfrage direkt in einer Kachel in Business Central mit der Information, welche Filiale welchen Bestand möchte.</li>
-      <li>Die Einkäufer:innen prüfen die Anfrage und geben sie frei oder lehnen sie ab.</li>
+      <li data-en="Staff scan the EAN code with the MDE device and enter the desired reorder point.">Die Mitarbeitenden scannen den EAN-Code mit dem MDE-Gerät und geben den gewünschten Meldebestand ein.</li>
+      <li data-en="The request appears directly in a tile in Business Central for purchasing, showing which store wants which stock level.">Im Einkauf erscheint die Anfrage direkt in einer Kachel in Business Central mit der Information, welche Filiale welchen Bestand möchte.</li>
+      <li data-en="Buyers review the request and approve or reject it.">Die Einkäufer:innen prüfen die Anfrage und geben sie frei oder lehnen sie ab.</li>
     </ul>
-    <h4>Ergebnis</h4>
-    <p>Die Telefonanrufe sind weggefallen. Gerade zum Saisonstart, zum Saisonende und im Weihnachtsgeschäft übermittelt jede Filiale viele Anfragen, einzeln pro Grösse und Farbe. Jede Anfrage ist nun nachvollziehbar, wer wann eine Erhöhung angefragt und wer sie freigegeben hat. Diese Daten stehen auch für Auswertungen zur Verfügung.</p>
-    <ul class="dlg_tags"><li>MDE-Scanning</li><li>Business Central</li><li>Freigabe-Workflow</li><li>Filiale &amp; Einkauf</li></ul>
+    <h4 data-en="Result">Ergebnis</h4>
+    <p data-en="Phone calls are no longer needed. Especially at the start and end of a season and during the Christmas business, every store submits many requests – individually for each size and colour. Every request is traceable: who requested an increase and when, and who approved it. This data is also available for reporting.">Die Telefonanrufe sind weggefallen. Gerade zum Saisonstart, zum Saisonende und im Weihnachtsgeschäft übermittelt jede Filiale viele Anfragen, einzeln pro Grösse und Farbe. Jede Anfrage ist nun nachvollziehbar, wer wann eine Erhöhung angefragt und wer sie freigegeben hat. Diese Daten stehen auch für Auswertungen zur Verfügung.</p>
+    <ul class="dlg_tags"><li data-en="MDE scanning">MDE-Scanning</li><li>Business Central</li><li data-en="Approval workflow">Freigabe-Workflow</li><li data-en="Store &amp; purchasing">Filiale &amp; Einkauf</li></ul>
   </div>
 </dialog>
 
 <!-- Hobbies -->
 <section class="boxes alt" id="hobbies">
   <div class="container">
-    <h4 class="sml_abs_title reveal">Freizeit</h4>
-    <h2 class="section_title reveal">Hobbys</h2>
+    <h4 class="sml_abs_title reveal" data-en="Beyond work">Freizeit</h4>
+    <h2 class="section_title reveal" data-en="Hobbies">Hobbys</h2>
     <div class="hobbies">
-      <div class="hobby reveal"><img class="hobby_icon" src="nahen.png" alt=""><h3>Nähen</h3><p>Ich nähe leidenschaftlich gern. Es verbindet Kreativität und Präzision, und am Ende halte ich das Ergebnis in den Händen.</p></div>
-      <div class="hobby reveal"><img class="hobby_icon" src="dachzelt.png" alt=""><h3>Reisen mit dem Dachzelt</h3><p>Auf Reisen mit dem Dachzelt geniesse ich die Natur und entdecke wunderschöne Landschaften.</p></div>
-      <div class="hobby reveal"><img class="hobby_icon" src="skifahrer.png" alt=""><h3>Skifahren</h3><p>Beim Skifahren bin ich in den Bergen, geniesse die frische Luft und die herrliche Aussicht.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="nahen.png" alt=""><h3 data-en="Sewing">Nähen</h3><p data-en="I'm passionate about sewing. It combines creativity and precision, and at the end I can hold the result in my hands.">Ich nähe leidenschaftlich gern. Es verbindet Kreativität und Präzision, und am Ende halte ich das Ergebnis in den Händen.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="dachzelt.png" alt=""><h3 data-en="Rooftop tent travel">Reisen mit dem Dachzelt</h3><p data-en="Travelling with my rooftop tent, I enjoy nature and discover beautiful landscapes.">Auf Reisen mit dem Dachzelt geniesse ich die Natur und entdecke wunderschöne Landschaften.</p></div>
+      <div class="hobby reveal"><img class="hobby_icon" src="skifahrer.png" alt=""><h3 data-en="Skiing">Skifahren</h3><p data-en="Skiing takes me to the mountains, where I enjoy the fresh air and the stunning views.">Beim Skifahren bin ich in den Bergen, geniesse die frische Luft und die herrliche Aussicht.</p></div>
     </div>
   </div>
 </section>
@@ -544,13 +626,13 @@
 <section class="boxes contact" id="contact">
   <div class="container two_cols">
     <div class="reveal">
-      <h4 class="sml_abs_title">Kontakt</h4>
-      <h2 class="section_title">Kontakt aufnehmen</h2>
-      <p>Ich bin offen für neue Herausforderungen – schreiben Sie mir gerne eine E-Mail.</p>
-      <a href="mailto:jasmin.marti89@gmail.com" class="btn btn-white">E-Mail schreiben</a>
+      <h4 class="sml_abs_title" data-en="Contact">Kontakt</h4>
+      <h2 class="section_title" data-en="Get in touch">Kontakt aufnehmen</h2>
+      <p data-en="I'm open to new challenges – feel free to send me an e-mail.">Ich bin offen für neue Herausforderungen – schreiben Sie mir gerne eine E-Mail.</p>
+      <a href="mailto:jasmin.marti89@gmail.com" class="btn btn-white" data-en="Send an e-mail">E-Mail schreiben</a>
     </div>
     <ul class="contact_list reveal">
-      <li><span>E-Mail</span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></li>
+      <li><span data-en="E-mail">E-Mail</span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></li>
       <li><span>GitHub</span><a href="https://github.com/jasminmarti89-ops">github.com/jasminmarti89-ops</a></li>
     </ul>
   </div>
@@ -562,13 +644,13 @@
 <footer class="footer_end">
   <div class="container">
     <span>&copy; 2026 Jasmin Marti</span>
-    <span class="credits"><a href="https://www.flaticon.com/de/kostenlose-icons/ski" title="Ski Icons">Ski Icons erstellt von Magnific - Flaticon</a></span>
-    <a href="#top">Nach oben</a>
+    <span class="credits"><a href="https://www.flaticon.com/de/kostenlose-icons/ski" title="Icons" data-en="Icons by Magnific – Flaticon">Icons von Magnific – Flaticon</a></span>
+    <a href="#top" data-en="Back to top">Nach oben</a>
   </div>
 </footer>
 
 <!-- Up Arrow -->
-<a href="#top" class="up_block" id="up_block" aria-label="Nach oben">
+<a href="#top" class="up_block" id="up_block" aria-label="Nach oben" data-en-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
 </a>
 
@@ -576,12 +658,51 @@
   const header = document.getElementById('header');
   const menuBtn = document.getElementById('menu_btn');
   const upBlock = document.getElementById('up_block');
+  const langSwitch = document.getElementById('lang_switch');
+
+  // ---------- Language (DE / EN) ----------
+  // German is written in the HTML; elements with data-en carry the English text right next to it.
+  // data-en       -> text of the element
+  // data-en-label -> aria-label (read by screen readers)
+  // data-en-alt   -> alt text of an image
+  const META = {
+    de: { title: 'Jasmin Marti – Portfolio', description: 'Portfolio und Lebenslauf von Jasmin Marti', menuOpen: 'Menü öffnen', menuClose: 'Menü schliessen', switchTo: 'Switch to English' },
+    en: { title: 'Jasmin Marti – Portfolio', description: 'Portfolio and CV of Jasmin Marti', menuOpen: 'Open menu', menuClose: 'Close menu', switchTo: 'Auf Deutsch wechseln' }
+  };
+  let lang = 'de';
+
+  function setLang(next) {
+    lang = next;
+    document.documentElement.lang = next;
+    document.querySelectorAll('[data-en]').forEach((el) => {
+      if (el.dataset.de === undefined) el.dataset.de = el.textContent;   // remember the German text once
+      el.textContent = next === 'en' ? el.dataset.en : el.dataset.de;
+    });
+    document.querySelectorAll('[data-en-label]').forEach((el) => {
+      if (el.dataset.deLabel === undefined) el.dataset.deLabel = el.getAttribute('aria-label');
+      el.setAttribute('aria-label', next === 'en' ? el.dataset.enLabel : el.dataset.deLabel);
+    });
+    document.querySelectorAll('[data-en-alt]').forEach((el) => {
+      if (el.dataset.deAlt === undefined) el.dataset.deAlt = el.alt;
+      el.alt = next === 'en' ? el.dataset.enAlt : el.dataset.deAlt;
+    });
+    document.title = META[next].title;
+    document.querySelector('meta[name="description"]').setAttribute('content', META[next].description);
+    menuBtn.setAttribute('aria-label', header.classList.contains('open') ? META[next].menuClose : META[next].menuOpen);
+    langSwitch.setAttribute('aria-label', META[next].switchTo);
+    langSwitch.querySelectorAll('[data-lang]').forEach((s) => s.classList.toggle('active', s.dataset.lang === next));
+    try { localStorage.setItem('lang', next); } catch (e) { /* storage blocked: language is simply not remembered */ }
+  }
+  langSwitch.addEventListener('click', () => setLang(lang === 'de' ? 'en' : 'de'));
+  let saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) { /* ignore */ }
+  setLang(saved === 'en' ? 'en' : 'de');
 
   // Menu open / close
   function setMenu(open) {
     header.classList.toggle('open', open);
     menuBtn.setAttribute('aria-expanded', open);
-    menuBtn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
+    menuBtn.setAttribute('aria-label', open ? META[lang].menuClose : META[lang].menuOpen);
     document.body.style.overflow = open ? 'hidden' : '';
   }
   menuBtn.addEventListener('click', () => setMenu(!header.classList.contains('open')));
