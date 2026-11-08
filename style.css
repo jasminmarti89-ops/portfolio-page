@@ -66,6 +66,10 @@ p { margin: 0 0 1em; }
 .btn { display: inline-block; margin: 6px; padding: 0.8em 2em; border: 2px solid currentColor; font: 400 0.95rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s; }
 .btn-light { color: var(--accent-soft); }
 .btn-light:hover, .btn-light:focus-visible { background: var(--accent-soft); color: var(--dark); border-color: var(--accent-soft); }
+/* intro buttons keep the width of the German labels ("Lebenslauf", "Kontakt"), so they do not shrink to "CV" in English */
+.intro .btns .btn { text-align: center; }
+.intro .btns .btn:first-child { min-width: 10.35em; }
+.intro .btns .btn:last-child { min-width: 8.65em; }
 
 /* Portrait + text. Phones: portrait above the name. From 860px: portrait right of the name. */
 .intro_inner { display: grid; justify-items: center; align-items: center; gap: 24px; width: min(1040px, 100%); }
