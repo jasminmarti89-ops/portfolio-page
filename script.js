@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     langSwitch.setAttribute('aria-label', META[next].switchTo);
     langSwitch.querySelectorAll('[data-lang]').forEach((s) => s.classList.toggle('active', s.dataset.lang === next));
     try { localStorage.setItem('lang', next); } catch (e) { /* storage blocked: language is simply not remembered */ }
+    document.dispatchEvent(new CustomEvent('langchange', { detail: next }));   // map.js updates its texts
   }
   langSwitch.addEventListener('click', () => setLang(lang === 'de' ? 'en' : 'de'));
   let saved = null;

@@ -10,8 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <link rel="stylesheet" href="style.css">
 <script src="script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="map.js" defer></script>
 </head>
 <body>
 
@@ -30,6 +33,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#experience" data-en="Experience">Berufserfahrung</a></li>
       <li><a href="#education" data-en="Education &amp; Training">Aus- und Weiterbildung</a></li>
+      <li><a href="#stations" data-en="Places">Stationen</a></li>
       <li><a href="#projects" data-en="Projects">Projekte</a></li>
       <li><a href="#hobbies" data-en="Hobbies">Hobbys</a></li>
       <li><a href="#contact" data-en="Contact">Kontakt</a></li>
@@ -260,8 +264,26 @@
   </div>
 </section>
 
+<!-- Stations map (Leaflet, data from stationen.json, logic in map.js) -->
+<section class="boxes" id="stations">
+  <div class="container">
+    <h4 class="sml_abs_title reveal" data-en="On the road">Unterwegs</h4>
+    <h2 class="section_title reveal" data-en="Places I've been">Meine Stationen</h2>
+    <p class="map_stats reveal" id="map_stats"></p>
+    <div class="map_filters reveal" role="group" aria-label="Kartenfilter" data-en-label="Map filter">
+      <button type="button" class="map_filter active" data-filter="all" aria-pressed="true" data-en="All">Alle</button>
+      <button type="button" class="map_filter" data-filter="trip2014" aria-pressed="false" data-en="World trip 2014–2015">Weltreise 2014–2015</button>
+      <button type="button" class="map_filter" data-filter="trip2018" aria-pressed="false" data-en="World trip 2018–2019">Weltreise 2018–2019</button>
+      <button type="button" class="map_filter" data-filter="language" aria-pressed="false" data-en="Language stays">Sprachaufenthalte</button>
+      <button type="button" class="map_filter" data-filter="home" aria-pressed="false" data-en="Work &amp; education">Arbeit &amp; Ausbildung</button>
+    </div>
+    <div class="map reveal" id="map" role="region" aria-label="Weltkarte mit meinen Stationen" data-en-label="World map with the places I've been"></div>
+    <p class="map_hint" data-en="Click a dot for details. Click into the map to zoom with the mouse wheel.">Klicke auf einen Punkt für Details. Zum Zoomen mit dem Mausrad zuerst in die Karte klicken.</p>
+  </div>
+</section>
+
 <!-- Projects -->
-<section class="boxes" id="projects">
+<section class="boxes alt" id="projects">
   <div class="container">
     <h4 class="sml_abs_title reveal">Portfolio</h4>
     <h2 class="section_title reveal" data-en="Projects">Projekte</h2>
@@ -386,7 +408,7 @@
 </dialog>
 
 <!-- Hobbies -->
-<section class="boxes alt" id="hobbies">
+<section class="boxes" id="hobbies">
   <div class="container">
     <h4 class="sml_abs_title reveal" data-en="Beyond work">Freizeit</h4>
     <h2 class="section_title reveal" data-en="Hobbies">Hobbys</h2>

@@ -205,6 +205,32 @@ p { margin: 0 0 1em; }
 .up_block { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 46px; height: 46px; display: grid; place-items: center; background: var(--dark); color: var(--white); text-decoration: none; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
 .up_block.show { opacity: 1; visibility: visible; }
 
+
+/* ---------- Stations map (Leaflet) ---------- */
+.map_stats { color: var(--muted); margin-bottom: 20px; }
+.map_filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+/* each filter shows a coloured dot in the colour of its markers (same colours as in map.js) */
+.map_filter { --dot: var(--accent-soft); display: inline-flex; align-items: center; gap: 8px; padding: 0.45em 1.1em; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font: 400 0.85rem 'Open Sans', sans-serif; color: var(--dark); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.map_filter::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--dot); }
+.map_filter[data-filter="trip2014"] { --dot: #9b6b5a; }
+.map_filter[data-filter="trip2018"] { --dot: #5b7f95; }
+.map_filter[data-filter="language"] { --dot: #c0a094; }
+.map_filter[data-filter="home"] { --dot: #292929; }
+.map_filter:hover { border-color: var(--accent-soft); }
+.map_filter.active { background: var(--dark); border-color: var(--dark); color: var(--white); }
+.map_filter.active[data-filter="home"]::before { box-shadow: 0 0 0 1px var(--white); }
+/* isolation keeps Leaflet's own high z-index values inside the map, so the fixed header stays on top */
+.map { position: relative; isolation: isolate; z-index: 0; height: clamp(340px, 62vh, 560px); border: 1px solid var(--line); background: #f2efe9; }
+.map_error { display: grid; place-items: center; padding: 24px; text-align: center; color: var(--muted); }
+.map_hint { margin: 10px 0 0; font-size: 0.85rem; color: var(--muted); }
+/* OpenStreetMap tiles in soft gray, so the coloured dots stand out */
+.map .leaflet-tile-pane { filter: grayscale(1) contrast(0.85) brightness(1.08); }
+/* popup */
+.map .leaflet-popup-content { margin: 12px 16px; font: 400 0.9rem/1.5 'Open Sans', sans-serif; color: var(--text); }
+.map_pop strong { display: block; font: 400 1.05rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: var(--dark); }
+.map_pop span { display: block; color: var(--muted); }
+.map_pop em { display: block; margin-top: 4px; font-style: normal; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+.map_pop p { margin: 6px 0 0; }
 /* ---------- Fade-up on scroll (only when JS runs, so content never stays hidden) ---------- */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .js .reveal.in { opacity: 1; transform: none; }
