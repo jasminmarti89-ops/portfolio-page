@@ -223,8 +223,9 @@ p { margin: 0 0 1em; }
 
 /* ---------- Footer ---------- */
 .footer_end { background: var(--darker); color: #888; font-size: 0.9rem; padding: 24px 0; }
-/* align-items: center puts all three footer texts on one vertical middle line, even with different font sizes */
-.footer_end .container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+/* three columns: copyright left, credits exactly in the middle, empty right column keeps the middle centred; stacked on phones */
+.footer_end .container { display: grid; grid-template-columns: 1fr; justify-items: start; align-items: center; gap: 8px; }
+@media (min-width: 640px) { .footer_end .container { grid-template-columns: 1fr auto 1fr; gap: 12px; } .footer_end .credits { justify-self: center; } }
 .footer_end a { color: #bbb; text-decoration: none; }
 .footer_end a:hover { color: var(--white); }
 .footer_end .credits { font-size: 0.7rem; }
