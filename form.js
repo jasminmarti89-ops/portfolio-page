@@ -6,7 +6,7 @@
    ========================================================= */
 
 // Access key from web3forms.com (the key only allows sending to your own address, so it may be public)
-const WEB3FORMS_ACCESS_KEY = 'YOUR_ACCESS_KEY_HERE';
+const WEB3FORMS_ACCESS_KEY = '563e1551-b289-4eea-9d91-f143bece3440';
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contact_form');
