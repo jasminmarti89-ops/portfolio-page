@@ -199,6 +199,28 @@ p { margin: 0 0 1em; }
 .contact_list li { padding: 12px 0; border-bottom: 1px solid #3c3c3c; }
 .contact_list span { display: block; font: 400 0.85rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; color: #999; }
 
+/* ---------- Contact form (on the dark contact area) ---------- */
+.contact_form { margin-top: 28px; }
+.form_row { display: grid; grid-template-columns: 1fr; gap: 0 20px; }
+@media (min-width: 560px) { .form_row { grid-template-columns: 1fr 1fr; } }
+.form_field { margin-bottom: 14px; }
+.form_field label { display: block; margin-bottom: 6px; font: 400 0.8rem 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.15em; color: #999; }
+.form_field .req { color: var(--accent-soft); }
+.form_field .opt { text-transform: none; letter-spacing: 0; color: #777; }
+.form_field input, .form_field textarea { display: block; width: 100%; padding: 12px 14px; border: 1px solid #4a4a4a; border-radius: 0; background: rgba(255, 255, 255, 0.04); font: 400 1rem 'Open Sans', sans-serif; color: #eee; transition: border-color 0.2s, background 0.2s; }
+.form_field textarea { resize: vertical; min-height: 130px; }
+.form_field input:focus, .form_field textarea:focus { outline: none; border-color: var(--accent-soft); background: rgba(255, 255, 255, 0.07); }
+/* soft red that stays readable on the dark background */
+.form_field.is_invalid input, .form_field.is_invalid textarea { border-color: #e8a598; }
+.form_error { min-height: 1.3em; margin: 6px 0 0; font-size: 0.85rem; line-height: 1.4; color: #e8a598; }
+.form_suggest { padding: 0; border: 0; background: none; font: inherit; color: var(--accent-soft); text-decoration: underline; cursor: pointer; }
+.form_honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form_submit { margin: 6px 0 0; cursor: pointer; background: none; }
+.form_submit:disabled { opacity: 0.6; cursor: wait; }
+.form_status { min-height: 1.5em; margin: 14px 0 0; }
+.form_status.is_success { color: #b9d8b0; }
+.form_status.is_error { color: #e8a598; }
+
 /* ---------- Footer ---------- */
 .footer_end { background: var(--darker); color: #888; font-size: 0.9rem; padding: 24px 0; }
 /* align-items: center puts all three footer texts on one vertical middle line, even with different font sizes */

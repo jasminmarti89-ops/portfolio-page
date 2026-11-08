@@ -15,6 +15,7 @@
 <script src="script.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script src="map.js" defer></script>
+<script src="form.js" defer></script>
 </head>
 <body>
 
@@ -426,8 +427,36 @@
     <div class="reveal">
       <h4 class="sml_abs_title" data-en="Contact">Kontakt</h4>
       <h2 class="section_title" data-en="Get in touch">Kontakt aufnehmen</h2>
-      <p data-en="I'm open to new challenges – feel free to send me an e-mail.">Ich bin offen für neue Herausforderungen – schreiben Sie mir gerne eine E-Mail.</p>
-      <a href="mailto:jasmin.marti89@gmail.com" class="btn btn-light" data-en="Send an e-mail">E-Mail schreiben</a>
+      <p data-en="I'm open to new challenges – feel free to send me a message.">Ich bin offen für neue Herausforderungen – schreiben Sie mir gerne eine Nachricht.</p>
+
+      <!-- Contact form: validation and sending in form.js (Web3Forms) -->
+      <form class="contact_form" id="contact_form" novalidate>
+        <div class="form_row">
+          <div class="form_field">
+            <label for="cf_name"><span data-en="Name">Name</span> <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="cf_name" name="name" autocomplete="name" required aria-describedby="cf_name_error">
+            <p class="form_error" id="cf_name_error" aria-live="polite"></p>
+          </div>
+          <div class="form_field">
+            <label for="cf_email"><span data-en="E-mail">E-Mail</span> <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="cf_email" name="email" autocomplete="email" inputmode="email" required aria-describedby="cf_email_error">
+            <p class="form_error" id="cf_email_error" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="form_field">
+          <label for="cf_subject"><span data-en="Subject">Betreff</span> <span class="opt" data-en="(optional)">(optional)</span></label>
+          <input type="text" id="cf_subject" name="subject">
+        </div>
+        <div class="form_field">
+          <label for="cf_message"><span data-en="Message">Nachricht</span> <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="cf_message" name="message" rows="5" required aria-describedby="cf_message_error"></textarea>
+          <p class="form_error" id="cf_message_error" aria-live="polite"></p>
+        </div>
+        <!-- honeypot against spam bots: hidden from visitors and screen readers -->
+        <input type="checkbox" name="botcheck" class="form_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn btn-light form_submit" data-en="Send message">Nachricht senden</button>
+        <p class="form_status" id="form_status" role="status" aria-live="polite"></p>
+      </form>
     </div>
     <ul class="contact_list reveal">
       <li><span data-en="E-mail">E-Mail</span><a href="mailto:jasmin.marti89@gmail.com">jasmin.marti89@gmail.com</a></li>
