@@ -223,9 +223,13 @@ p { margin: 0 0 1em; }
 
 /* ---------- Footer ---------- */
 .footer_end { background: var(--darker); color: #888; font-size: 0.9rem; padding: 24px 0; }
-/* three columns: copyright left, credits exactly in the middle, empty right column keeps the middle centred; stacked on phones */
+/* copyright left (aligned with the page content); credits centred in the free space between copyright and the up arrow.
+   The footer row ends where the fixed up arrow begins (arrow: 46px wide, 20px from the right edge, plus 20px gap). Stacked on phones. */
 .footer_end .container { display: grid; grid-template-columns: 1fr; justify-items: start; align-items: center; gap: 8px; }
-@media (min-width: 640px) { .footer_end .container { grid-template-columns: 1fr auto 1fr; gap: 12px; } .footer_end .credits { justify-self: center; } }
+@media (min-width: 640px) {
+  .footer_end .container { display: flex; width: auto; margin-left: max(16px, (100% - 1140px) / 2); margin-right: 86px; gap: 24px; }
+  .footer_end .credits { flex: 1; text-align: center; }
+}
 .footer_end a { color: #bbb; text-decoration: none; }
 .footer_end a:hover { color: var(--white); }
 .footer_end .credits { font-size: 0.7rem; }
