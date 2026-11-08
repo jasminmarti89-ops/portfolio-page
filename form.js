@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       emailMissing: 'Bitte geben Sie Ihre E-Mail-Adresse ein.',
       emailInvalid: 'Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@firma.ch).',
       messageMissing: 'Bitte schreiben Sie eine Nachricht.',
-      messageShort: (n) => `Die Nachricht ist zu kurz – noch ${n} Zeichen.`,
       suggest: 'Meinten Sie',
       sending: 'Wird gesendet …',
       send: 'Nachricht senden',
@@ -42,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
       emailMissing: 'Please enter your e-mail address.',
       emailInvalid: 'Please enter a valid e-mail address (e.g. name@company.com).',
       messageMissing: 'Please write a message.',
-      messageShort: (n) => `The message is too short – ${n} more characters.`,
       suggest: 'Did you mean',
       sending: 'Sending …',
       send: 'Send message',
@@ -54,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   const t = () => TEXT[document.documentElement.lang === 'en' ? 'en' : 'de'];
 
-  const MIN_MESSAGE = 20;
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const COMMON_DOMAINS = ['gmail.com', 'googlemail.com', 'gmx.ch', 'gmx.net', 'gmx.de', 'bluewin.ch', 'hotmail.com', 'hotmail.ch',
     'outlook.com', 'yahoo.com', 'icloud.com', 'sunrise.ch', 'hispeed.ch', 'proton.me', 'protonmail.com', 'web.de', 'bfh.ch'];
@@ -92,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const checks = {
     name: (v) => (!v ? ['nameMissing'] : v.length < 2 ? ['nameShort'] : null),
     email: (v) => (!v ? ['emailMissing'] : !EMAIL_PATTERN.test(v) ? ['emailInvalid'] : null),
-    message: (v) => (!v ? ['messageMissing'] : v.length < MIN_MESSAGE ? ['messageShort', MIN_MESSAGE - v.length] : null)
+    message: (v) => (!v ? ['messageMissing'] : null)   // only required, no minimum length
   };
   const touched = {};
 
