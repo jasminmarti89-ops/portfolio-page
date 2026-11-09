@@ -231,6 +231,7 @@
   {"group": "trip2018", "name": "Moraine Lake & Lake Louise", "country": "CA", "lat": 51.42, "lng": -116.18},
   {"group": "trip2018", "name": "Icefields Parkway", "country": "CA", "lat": 52.22, "lng": -117.22},
   {"group": "trip2018", "name": "Jasper", "country": "CA", "lat": 52.87, "lng": -118.08},
+  {"group": "trip2018", "name": "Maligne Lake", "country": "CA", "lat": 52.72, "lng": -117.64, "note": "Jasper NP", "note_en": "Jasper NP"},
   {"group": "trip2018", "name": "Mount Robson", "country": "CA", "lat": 53.11, "lng": -119.16},
   {"group": "trip2018", "name": "Wells Gray Provincial Park", "country": "CA", "lat": 51.95, "lng": -120.13},
   {"group": "trip2018", "name": "Williams Lake", "country": "CA", "lat": 52.14, "lng": -122.14, "note": "Timber Kings", "note_en": "Timber Kings"},
